@@ -1,0 +1,13 @@
+services:
+  pet-frontend:
+    build:
+      context: .
+      args:
+        # Aqui cambian el puerto segun el puerto de tu backend, yo tengo 8999 pero seguramente ustedes 8080 o alguno otro
+        - VITE_API_BASE_URL=http://localhost:8999/api/
+    container_name: pet-web-ui
+    ports:
+      - "3000:80"
+    restart: always
+
+    # El backend no se incluye, muchachos ustedes tienen que correr el back desde otra terminal :) 
