@@ -41,23 +41,23 @@ Antes de iniciar, asegúrate de que el backend de Spring Boot esté en ejecució
 
 El frontend necesita conocer la dirección de tu API. Si tu puerto de Spring Boot es distinto al configurado por defecto (ejemplo: 8999), abre el archivo ***docker-compose.yml*** y modifica la línea de ***VITE_API_BASE_URL***:
 
-***
+```
 - VITE_API_BASE_URL=http://localhost:8999/pets
-***
+```
 
 ### 2. Ejecución con Docker (Recomendado)
 
 Abre una terminal en la raíz del proyecto y ejecuta el comando correspondiente:
 
 **En Windows (PowerShell o CMD):**
-***
+```
 docker compose up --build -d
-***
+``` 
 
 **En Linux (Arch/Ubuntu):**
-***
+```
 sudo docker-compose up --build -d
-***
+```
 
 Una vez finalizado el proceso, la aplicación estará disponible en: ***http://localhost:3000*** 
 
@@ -66,19 +66,19 @@ Una vez finalizado el proceso, la aplicación estará disponible en: ***http://l
 Si prefieres ejecutar el proyecto sin Docker, asegúrate de tener Node.js v20 o superior:
 
 1. Instalar dependencias:
-***
+```
 npm install
-***
+```
 
 2. Configurar variables de entorno (Crear archivo ***.env*** en la raíz):
-***
+```
 VITE_API_BASE_URL=http://localhost:8999/pets
-***
+```
 
 3. Iniciar el servidor:
-***
+```
 npm run dev
-***
+```
 
 ## Resolución de problemas frecuentes
 
