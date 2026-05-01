@@ -1,5 +1,3 @@
-import { Slider } from '@radix-ui/react-slider';
-
 export function Sidebar() {
   return (
     <aside className="w-72 bg-cream-50 border-r border-neutral-200 p-6">
