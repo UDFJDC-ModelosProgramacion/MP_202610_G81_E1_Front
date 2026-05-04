@@ -1,17 +1,5 @@
-```
-src/
-├── api/             # Configuración base de Axios
-│   └── axios.ts
-├── components/      # Componentes visuales 
-│   ├── ui/          # Botones, inputs, etc.
-│   ├── Header.tsx
-│   └── PetCard.tsx
-├── services/        # Logica de llamadas al Backend
-│   └── petService.ts
-├── types/           # DTOs
-│   └── pet.ts       
-└── App.tsx # El orquestador principal
-```
+## Enlaces de interes
+- [Estructura del Front](https://github.com/UDFJDC-ModelosProgramacion/MP_202610_G81_E1_Front/wiki/Estructura)
 
 # Pet Adoption System - Frontend
 
@@ -79,6 +67,23 @@ VITE_API_BASE_URL=http://localhost:8999/pets
 ```
 npm run dev
 ```
+
+## Arbol
+```
+src/
+├── api/             # Configuración base de Axios
+│   └── axios.ts
+├── components/      # Componentes visuales 
+│   ├── ui/          # Botones, inputs, etc.
+│   ├── Header.tsx
+│   └── PetCard.tsx
+├── services/        # Logica de llamadas al Backend
+│   └── petService.ts
+├── types/           # DTOs
+│   └── pet.ts       
+└── App.tsx # El orquestador principal
+```
+
 
 ## Resolución de problemas frecuentes
 
