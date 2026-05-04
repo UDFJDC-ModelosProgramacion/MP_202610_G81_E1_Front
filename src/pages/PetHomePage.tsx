@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
-import { Sidebar } from '../components/Sidebar';
+import { Sidebar } from '../components/SidebarProps';
 import { PetCard } from '../components/PetCard';
 import { getAvailablePets } from '../services/petService';
 import { type PetDTO } from '../types/pet';
@@ -9,27 +9,32 @@ export const PetHomePage = () => {
   const [pets, setPets] = useState<PetDTO[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
+  const [filters, setFilters] = useState<{ species?: string; size?: string }>({});
 
   useEffect(() => {
     const loadPets = async () => {
       try {
         setLoading(true);
-        const data = await getAvailablePets();
+        const data = await getAvailablePets(filters);
         setPets(data);
         setError(null);
       } catch (err) {
-        console.error("Error al conectar con Spring Boot:", err);
-        setError("Could not connect to the server. Check if Spring is running.");
+        setError("Could not connect to the server.");
       } finally {
         setLoading(false);
       }
     };
     loadPets();
-  }, []);
+  }, [filters]);
+
+  const handleFilterUpdate = (newFilters: { species?: string; size?: string }) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+  };
 
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar />
+      <Sidebar onFilterChange={handleFilterUpdate} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
         <main className="flex-1 overflow-x-hidden overflow-y-auto p-8">
@@ -60,7 +65,6 @@ export const PetHomePage = () => {
               </div>
             )}
 
-            {/* El Grid de Mascotas */}
             {/* El Grid de Mascotas */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 			  {pets.map((pet) => (
