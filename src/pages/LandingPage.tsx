@@ -22,10 +22,11 @@ export const LandingPage = () => {
     },
     { 
       id: 'HU03', 
-      title: 'Modulo de xxxxx (HU03)', 
-      description: 'Próximamente',
+      title: 'Registro de Refugios (HU03)', 
+      description: 'Permite registrar nuevos refugios en la red.',
       icon: <Lock className="w-12 h-12 text-purple-500" />,
-      active: false 
+      active: true,
+      path: '/register-shelter'
     },
     { 
       id: 'HU04', 
