@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from 'react';
-import { registerShelter } from '../services/shelterService';
+import { registerShelter, checkShelterNameExists, checkShelterEmailExists } from '../services/shelterService';
 import { AlertCircle, Check, Upload, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -31,12 +31,40 @@ export const ShelterRegistrationPage = () => {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorDialogMessage, setErrorDialogMessage] = useState<string | null>(null);
+  const [nameExistsError, setNameExistsError] = useState(false);
+  const [nameCheckLoading, setNameCheckLoading] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState(false);
+  const [emailCheckLoading, setEmailCheckLoading] = useState(false);
 
   const maxDescriptionLength = 500;
   const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
 
   const handleBlur = (field: 'name' | 'city' | 'email') => {
     setTouched({ ...touched, [field]: true });
+  };
+
+  const handleNameBlur = async () => {
+    setTouched((prev) => ({ ...prev, name: true }));
+    if (formData.name.trim() === '') {
+      setNameExistsError(false);
+      return;
+    }
+    setNameCheckLoading(true);
+    const exists = await checkShelterNameExists(formData.name);
+    setNameExistsError(exists);
+    setNameCheckLoading(false);
+  };
+
+  const handleEmailBlur = async () => {
+    setTouched((prev) => ({ ...prev, email: true }));
+    if (!isEmailValid) { // Only check for existence if email is valid format
+      setEmailExistsError(false);
+      return;
+    }
+    setEmailCheckLoading(true);
+    const exists = await checkShelterEmailExists(formData.email);
+    setEmailExistsError(exists);
+    setEmailCheckLoading(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -47,10 +75,21 @@ export const ShelterRegistrationPage = () => {
       ...prevData,
       [id]: value,
     }));
+    if (id === 'name') {
+      setNameExistsError(false); // Clear error when user types
+    }
+    if (id === 'email') {
+      setEmailExistsError(false); // Clear error when user types
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // Prevent submission if any inline validation error is present
+    if (nameExistsError || emailExistsError) {
+      return;
+    }
 
     if (!formData.name || !formData.city || !isEmailValid) {
       setTouched({ name: true, city: true, email: true });
@@ -72,11 +111,12 @@ export const ShelterRegistrationPage = () => {
       setTouched({ name: false, city: false, email: false }); // Reset touched state
     } catch (err: any) {
       setSubmissionStatus('error');
-      console.error('Failed to register shelter:', err);
-      if (err.response && err.response.status === 412) {
-        setErrorDialogMessage(err.response.data.message || 'Duplicate entry found. Name or email may already exist.');
-        setShowErrorDialog(true);
-      }
+      console.error('Failed to register shelter:', err); // Log error for debugging
+
+      // For any error from registerShelter, show a generic error dialog.
+      // Specific duplicate errors are now handled inline before submission.
+      setErrorDialogMessage('Failed to register shelter. Please try again.');
+      setShowErrorDialog(true);
     } finally {
       setSubmissionStatus('idle'); // Reset submission status
     }
@@ -102,16 +142,25 @@ export const ShelterRegistrationPage = () => {
                 type="text"
                 value={formData.name}
                 onChange={handleChange}
-                onBlur={() => handleBlur('name')}
+                onBlur={handleNameBlur} // Use the new blur handler
                 placeholder="e.g., Happy Tails Sanctuary"
                 className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-                  touched.name && !formData.name
+                  (touched.name && !formData.name) || nameExistsError
                     ? 'border-red-300 focus:ring-red-500'
                     : 'border-gray-300 focus:ring-green-500'
                 }`}
                 required
               />
-              {touched.name && !formData.name && (
+              {nameCheckLoading && (
+                <p className="text-gray-500 text-xs mt-1 flex items-center gap-1">Checking name...</p>
+              )}
+              {nameExistsError && (
+                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  This shelter name already exists
+                </p>
+              )}
+              {touched.name && !formData.name && ( // Original error for empty name
                 <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" />
                   Shelter name is required
@@ -165,16 +214,19 @@ export const ShelterRegistrationPage = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  onBlur={() => handleBlur('email')}
+                  onBlur={handleEmailBlur} // Use the new blur handler
                   placeholder="e.g., contact@happytails.org"
                   className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-                    touched.email && !isEmailValid
+                    (touched.email && !isEmailValid) || emailExistsError
                       ? 'border-red-300 focus:ring-red-500'
                       : 'border-gray-300 focus:ring-green-500'
                   }`}
                   required
                 />
-                {isEmailValid && (
+                {emailCheckLoading && (
+                  <p className="text-gray-500 text-xs mt-1 flex items-center gap-1">Checking email...</p>
+                )}
+                {isEmailValid && !emailExistsError && (
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
                     <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
                       <Check className="w-4 h-4 text-green-600" />
@@ -182,6 +234,12 @@ export const ShelterRegistrationPage = () => {
                   </div>
                 )}
               </div>
+              {emailExistsError && (
+                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  This shelter email already exists
+                </p>
+              )}
               {touched.email && !isEmailValid && (
                 <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" />
