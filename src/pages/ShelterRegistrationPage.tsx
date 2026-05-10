@@ -1,8 +1,18 @@
 import React, { useState, FormEvent } from 'react';
 import { registerShelter } from '../services/shelterService';
-import { AlertCircle, Check, Upload } from 'lucide-react';
+import { AlertCircle, Check, Upload, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../app/components/ui/dialog';
 
 export const ShelterRegistrationPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     city: '',
@@ -18,7 +28,7 @@ export const ShelterRegistrationPage = () => {
   });
 
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState<string>('');
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const maxDescriptionLength = 500;
   const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
@@ -48,24 +58,23 @@ export const ShelterRegistrationPage = () => {
 
     setSubmissionStatus('loading');
     try {
-      const registeredShelter = await registerShelter(formData);
+      await registerShelter(formData);
       setSubmissionStatus('success');
-      setMessage('Shelter registered successfully with ID: ' + registeredShelter.id);
-      setFormData({
+      setShowSuccessDialog(true); // Open the success dialog
+      setFormData({ // Reset form data
         name: '',
         city: '',
         email: '',
         gallery: '',
         description: '',
       });
-      setTouched({ name: false, city: false, email: false });
+      setTouched({ name: false, city: false, email: false }); // Reset touched state
     } catch (err: any) {
       setSubmissionStatus('error');
       const errorMessage = err.response?.data?.message || err.message || 'Failed to register shelter. Please try again.';
       setMessage(errorMessage);
     }
-  };
-
+    };
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-3xl mx-auto">
@@ -239,14 +248,34 @@ export const ShelterRegistrationPage = () => {
               {submissionStatus === 'loading' ? 'Creating...' : 'Create Shelter'}
             </button>
           </div>
-
-          {message && (
-            <p className={`text-center mt-4 font-medium ${submissionStatus === 'success' ? 'text-green-600' : 'text-red-600'}`}>
-              {message}
-            </p>
-          )}
         </form>
       </div>
+
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="flex flex-col items-center gap-2">
+              <CheckCircle className="h-12 w-12 text-green-500" />
+              <span>Shelter Created Successfully!</span>
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Your shelter profile has been successfully registered.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-center">
+            <button
+              type="button"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+              onClick={() => {
+                setShowSuccessDialog(false);
+                navigate('/');
+              }}
+            >
+              Accept
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
