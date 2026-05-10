@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PetHomePage } from './pages/PetHomePage';
-import { LandingPage } from './pages/LandingPage'; 
+import { LandingPage } from './pages/LandingPage';
+import { ShelterRegistrationPage } from './pages/ShelterRegistrationPage'; // Import the new page
 
 function App() {
   return (
@@ -11,6 +12,9 @@ function App() {
         
         {/* HU01 */}
         <Route path="/pets" element={<PetHomePage />} />
+
+        {/* HU for Shelter Registration */}
+        <Route path="/register-shelter" element={<ShelterRegistrationPage />} />
         
         {/* Placeholder para futuras rutas */}
         <Route path="*" element={<div className="p-10">404 - Not Found</div>} />
