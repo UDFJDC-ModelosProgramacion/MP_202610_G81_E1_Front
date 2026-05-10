@@ -29,6 +29,8 @@ export const ShelterRegistrationPage = () => {
 
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
+  const [errorDialogMessage, setErrorDialogMessage] = useState<string | null>(null);
 
   const maxDescriptionLength = 500;
   const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
@@ -49,7 +51,6 @@ export const ShelterRegistrationPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setMessage('');
 
     if (!formData.name || !formData.city || !isEmailValid) {
       setTouched({ name: true, city: true, email: true });
@@ -71,10 +72,15 @@ export const ShelterRegistrationPage = () => {
       setTouched({ name: false, city: false, email: false }); // Reset touched state
     } catch (err: any) {
       setSubmissionStatus('error');
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to register shelter. Please try again.';
-      setMessage(errorMessage);
+      console.error('Failed to register shelter:', err);
+      if (err.response && err.response.status === 412) {
+        setErrorDialogMessage(err.response.data.message || 'Duplicate entry found. Name or email may already exist.');
+        setShowErrorDialog(true);
+      }
+    } finally {
+      setSubmissionStatus('idle'); // Reset submission status
     }
-    };
+  };
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-3xl mx-auto">
@@ -269,6 +275,32 @@ export const ShelterRegistrationPage = () => {
               onClick={() => {
                 setShowSuccessDialog(false);
                 navigate('/');
+              }}
+            >
+              Accept
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="flex flex-col items-center gap-2 text-red-600">
+              <AlertCircle className="h-12 w-12" />
+              <span>Registration Error</span>
+            </DialogTitle>
+            <DialogDescription className="text-center text-red-500">
+              {errorDialogMessage}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-center">
+            <button
+              type="button"
+              className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium shadow-sm"
+              onClick={() => {
+                setShowErrorDialog(false);
+                setErrorDialogMessage(null);
               }}
             >
               Accept
