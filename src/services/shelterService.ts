@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { type ShelterDTO } from '../types/shelter';
 
-const API_URL = 'http://localhost:8999/api/shelters';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const API_URL = `${BASE_URL}/shelters`;
 
 export const registerShelter = async (shelterData: Omit<ShelterDTO, 'id'>): Promise<ShelterDTO> => {
   const response = await axios.post<ShelterDTO>(API_URL, shelterData);
@@ -14,7 +15,7 @@ export const checkShelterNameExists = async (name: string): Promise<boolean> => 
     return response.data.exists;
   } catch (error) {
     console.error('Error checking shelter name existence:', error);
-    return false; // Assume not exists on error to allow submission
+    return false; 
   }
 };
 
@@ -24,7 +25,7 @@ export const checkShelterEmailExists = async (email: string): Promise<boolean> =
     return response.data.exists;
   } catch (error) {
     console.error('Error checking shelter email existence:', error);
-    return false; // Assume not exists on error to allow submission
+    return false;
   }
 };
 

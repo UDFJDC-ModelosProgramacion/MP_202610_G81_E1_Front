@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { type PetDTO } from '../types/pet'; 
 
-const API_URL = 'http://localhost:8999/api/pets';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const API_URL = `${BASE_URL}/pets`;
 
 export interface PetFilters {
   species?: string;
@@ -10,7 +11,7 @@ export interface PetFilters {
 }
 
 export const getAvailablePets = async (filters?: PetFilters): Promise<PetDTO[]> => {
-  // Siempre enviamos el status AVAILABLE por defecto para esta pagina
+  // status AVAILABLE por defecto 
   const response = await axios.get<PetDTO[]>(API_URL, {
     params: {
       status: 'AVAILABLE',
