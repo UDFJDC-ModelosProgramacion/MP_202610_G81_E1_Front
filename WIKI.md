@@ -281,7 +281,7 @@ const modules = [
     title: 'Modulo de Adopciones (HU02)', 
     description: 'Gestion de solicitudes de adopcion.',
     icon: <Users className="w-12 h-12 text-blue-500" />,
-    active: true, // ¡Actívalo aquí!
+    active: true, // Actívalo aquí
     path: '/adoptions' // Y pon la ruta
   },
   // ... resto de modulos
@@ -322,7 +322,7 @@ Ya no tienes que buscar por todo el código. Ahora puedes ajustar el puerto del 
 
 ```yaml
 environment:
-  - VITE_API_BASE_URL=http://localhost:8999/pets
+  - VITE_API_BASE_URL=http://localhost:8999/api
 ```
 
 **Súper Importante:** Si cambias el puerto o cualquier variable de entorno, recuerda siempre ejecutar:
@@ -393,7 +393,7 @@ npm install
 Crea un archivo `.env` en la raiz del proyecto (al mismo nivel que `package.json`):
 
 ```
-VITE_API_BASE_URL=http://localhost:8999/pets
+VITE_API_BASE_URL=http://localhost:8999/api
 ```
 
 **Nota:** Vite requiere que las variables de entorno empiecen con `VITE_`.
@@ -430,7 +430,7 @@ La URL base del API se configura en dos lugares:
 
 1. **Variables de entorno (`.env` o `docker-compose.yml`):**
    ```
-   VITE_API_BASE_URL=http://localhost:8999/pets
+   VITE_API_BASE_URL=http://localhost:8999/api
    ```
 
 2. **En los servicios (`src/services/*.ts`):**
