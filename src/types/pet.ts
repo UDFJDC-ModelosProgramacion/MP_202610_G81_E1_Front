@@ -1,5 +1,3 @@
-// src/types/pet.ts
-
 export interface PetDTO {
   id: number;
   name: string;
