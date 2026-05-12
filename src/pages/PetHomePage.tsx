@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Header } from '../components/Header';
-import { Sidebar } from '../components/SidebarProps';
-import { PetCard } from '../components/PetCard';
+import { Header } from '../components/layout/Header';
+import { Sidebar } from '../features/pet-inventory/components/SidebarPetFilter';
+import { PetCard } from '../features/pet-inventory/components/PetCard';
 import { getAvailablePets } from '../services/petService';
 import { type PetDTO } from '../types/pet';
 
@@ -73,8 +73,7 @@ export const PetHomePage = () => {
 				  name={pet.name}
 				  breed={pet.breed}
 				  age={pet.age}
-				  photos={pet.photos} // Usamos la propiedad photos como definimos en el DTO de Java
-				  // Accedemos al nombre dentro del objeto shelter
+				  photos={pet.photos} 
 				  shelterName={pet.shelter?.name || "Refugio Local"} 
 				/>
 			  ))}

@@ -1,5 +1,5 @@
 import { MapPin } from 'lucide-react'; 
-import { ImageWithFallback } from './figma/ImageWithFallback'; 
+import { ImageWithFallback } from '../../../components/shared/ImageWithFallback'; 
 
 interface PetCardProps {
   name: string;
