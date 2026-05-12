@@ -73,20 +73,21 @@ VITE_API_BASE_URL=http://localhost:8999/pets
 npm run dev
 ```
 
-## Arbol
+## Arbol (Simplificado)
 ```
-src/
-├── api/             # Configuración base de Axios
-│   └── axios.ts
-├── components/      # Componentes visuales 
-│   ├── ui/          # Botones, inputs, etc.
-│   ├── Header.tsx
-│   └── PetCard.tsx
-├── services/        # Logica de llamadas al Backend
-│   └── petService.ts
-├── types/           # DTOs
-│   └── pet.ts       
-└── App.tsx # El orquestador principal
+/
+├── src/
+│   ├── components/
+│   │   └── layout/      # Piezas globales (Header, Footer)
+│   ├── features/        # Módulos por funcionalidad
+│   ├── pages/           # Vistas principales de la app
+│   ├── services/        # Lógica de llamadas al Backend
+│   ├── styles/          # Estilos CSS y temas
+│   ├── types/           # Interfaces y DTOs
+│   └── App.tsx          # Orquestador principal
+├── Dockerfile           # Configuración de Docker
+├── docker-compose.yml   # Orquestación y variables de entorno
+└── package.json         # Dependencias y scripts
 ```
 
 
@@ -99,3 +100,4 @@ src/
 ## Notas adicionales
 
 Para facilitar el despliegue entre diferentes equipos, el proceso de construcción omite verificaciones estrictas de TypeScript. Si añades nuevos componentes que requieran librerías externas, asegúrate de registrarlas en el archivo package.json. Para mayor comodidad ire agregando en la wiki la estructura que iremos trabajando para tener el proyecto escalable y modular.
+le y modular.

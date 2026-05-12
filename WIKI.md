@@ -64,64 +64,47 @@ La aplicacion consume datos de un API RESTful construido en Spring Boot (Backend
 
 ## Estructura del Proyecto
 
-El proyecto sigue una arquitectura modular basada en caracteristicas (feature-based), donde cada historia de usuario puede tener sus propios componentes, servicios y tipos.
+¡Buenas noticias! Hemos organizado el proyecto siguiendo una arquitectura basada en **features**. Esto nos ayuda a que el código sea más escalable y que cada uno pueda trabajar en su parte de forma más independiente.
 
-### Vista General
+### Vista General (Simplificada)
 
 ```
-MP_202610_G81_E1_Front/
+/
 ├── src/
-│   ├── api/                  # Configuracion base de Axios (opcional)
-│   ├── components/           # Componentes reutilizables
-│   │   ├── ui/               # Componentes base de shadcn/ui (NO modificar)
-│   │   ├── figma/            # Componentes especificos para diseno
-│   │   ├── Header.tsx        # Barra de navegacion superior
-│   │   ├── PetCard.tsx       # Tarjeta de mascota (HU01)
-│   │   └── SidebarProps.tsx  # Barra lateral con filtros (HU01)
-│   ├── pages/                # Vistas principales (Paginas)
-│   │   ├── LandingPage.tsx   # Pagina de inicio con modulos
-│   │   └── PetHomePage.tsx   # Vista principal de mascotas (HU01)
-│   ├── services/             # Logica de consumo de API
-│   │   └── petService.ts     # Servicios para mascotas
-│   ├── types/                # Definicion de interfaces y DTOs
-│   │   └── pet.ts            # Tipos de datos de mascotas
-│   ├── styles/               # Archivos CSS globales
-│   │   ├── index.css         # Estilos principales
-│   │   ├── theme.css         # Variables de tema
-│   │   └── fonts.css         # Fuentes
-│   ├── App.tsx               # Configuracion de rutas
-│   └── main.tsx              # Punto de entrada
-├── public/                   # Archivos estaticos
-├── node_modules/             # Dependencias (no versionar)
-├── dist/                     # Build de produccion (generado)
-├── Dockerfile                # Configuracion de imagen Docker
-├── docker-compose.yml        # Orquestacion de contenedores
-├── package.json              # Dependencias y scripts
-├── vite.config.ts            # Configuracion de Vite
-├── tsconfig.json             # Configuracion de TypeScript
-└── README.md                 # Documentacion breve
+│   ├── components/
+│   │   ├── layout/       # Piezas globales (Header, Sidebar)
+│   │   └── ui/           # Componentes base (shadcn/ui)
+│   ├── features/         # Lógica por funcionalidad (módulos)
+│   ├── pages/            # Vistas principales de la app
+│   ├── services/         # Conexión central con la API
+│   ├── styles/           # Estilos globales, fuentes y temas
+│   ├── types/            # Interfaces y DTOs
+│   └── App.tsx           # Orquestador de rutas
+├── Dockerfile            # Receta para crear la imagen Docker
+├── docker-compose.yml    # Orquestación y variables (puertos, API URL)
+└── package.json          # Listado de dependencias y scripts
 ```
 
-### Explicacion de Carpetas
+### Explicación de Carpetas
 
-| Carpeta | Descripcion | Que hacer aqui |
-|---------|-------------|----------------|
-| `src/components` | Componentes visuales reutilizables | Crear componentes que se usan en varias paginas |
-| `src/components/ui` | Componentes base de shadcn/ui | **NO tocar**, son componentes de terceros |
-| `src/pages` | Vistas principales de la app | Crear una nueva pagina por cada HU |
-| `src/services` | Funciones para consumir el API | Crear funciones de peticiones HTTP por cada recurso |
-| `src/types` | Interfaces de TypeScript | Definir la forma de los datos (DTOs) |
-| `src/styles` | Estilos globales | Modificar temas o estilos que afecten toda la app |
+| Carpeta | ¿Qué guardamos aquí? |
+|---------|----------------------|
+| `src/components/layout` | Componentes que se ven en casi todas las páginas (Header, Footer). |
+| `src/features` | El corazón de cada módulo. Agrupamos componentes y lógica por funcionalidad. |
+| `src/pages` | Las páginas completas que combinan features y componentes. |
+| `src/services` | Todas las funciones que hablan con el Backend. |
+| `src/styles` | Archivos CSS, configuración de temas y fuentes. |
+| `src/types` | Las "plantillas" de nuestros datos para que TypeScript nos ayude. |
 
 ---
 
 ## Guia para Agregar Historias de Usuario
 
-Esta es la guia paso a paso para agregar una nueva Historia de Usuario (HU) al proyecto. Supondremos que vamos a agregar la **HU02: Modulo de Adopciones** como ejemplo.
+Esta es la guia paso a paso para agregar una nueva Historia de Usuario (HU) al proyecto siguiendo nuestra nueva arquitectura. Supondremos que vamos a agregar la **HU02: Modulo de Adopciones** como ejemplo.
 
 ### Paso 1: Definir los Tipos de Datos (DTOs)
 
-Crea un nuevo archivo en `src/types/` con la interfaz que coincida con el DTO del backend.
+Crea un nuevo archivo en `src/types/` con la interfaz que coincida con el DTO del backend. Esto nos asegura que todos hablemos el mismo idioma que el servidor.
 
 **Archivo:** `src/types/adoption.ts`
 
@@ -151,53 +134,53 @@ export interface CreateAdoptionDTO {
 
 ### Paso 2: Crear el Servicio (Conexion API)
 
-Crea un archivo en `src/services/` para manejar todas las peticiones HTTP relacionadas con tu HU.
+Crea un archivo en `src/services/` para manejar todas las peticiones HTTP. Centralizamos esto aquí para que sea fácil de mantener.
 
 **Archivo:** `src/services/adoptionService.ts`
 
 ```typescript
 import axios from 'axios';
-import { type AdoptionDTO, type CreateAdoptionDTO } from '../types/adoption';
+import { type AdoptionDTO } from '../types/adoption';
 
-// URL base para este recurso (ajusta el puerto segun tu backend)
-const API_URL = 'http://localhost:8999/api/adoptions';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const API_URL = `${BASE_URL}/adoptions`;
 
-// Obtener todas las adopciones
-export const getAdoptions = async (): Promise<AdoptionDTO[]> => {
-  const response = await axios.get<AdoptionDTO[]>(API_URL);
-  return response.data;
-};
+export interface AdoptionFilters {
+  status?: string;
+  petId?: number;
+}
 
-// Obtener una adopcion por ID
-export const getAdoptionById = async (id: number): Promise<AdoptionDTO> => {
-  const response = await axios.get<AdoptionDTO>(`${API_URL}/${id}`);
-  return response.data;
-};
-
-// Crear una nueva adopcion
-export const createAdoption = async (data: CreateAdoptionDTO): Promise<AdoptionDTO> => {
-  const response = await axios.post<AdoptionDTO>(API_URL, data);
-  return response.data;
-};
-
-// Actualizar el estado de una adopcion
-export const updateAdoptionStatus = async (id: number, status: string): Promise<AdoptionDTO> => {
-  const response = await axios.patch<AdoptionDTO>(`${API_URL}/${id}/status`, { status });
+// Ejemplo: Obtener adopciones con filtros (ej. solo las que están en PROGRESS)
+export const getAdoptions = async (filters?: AdoptionFilters): Promise<AdoptionDTO[]> => {
+  const response = await axios.get<AdoptionDTO[]>(API_URL, {
+    params: {
+      ...filters
+    }
+  });
   return response.data;
 };
 ```
 
-### Paso 3: Crear la Pagina (Vista)
+### Paso 3: Crear el Módulo (Feature)
 
-Crea un nuevo archivo en `src/pages/` que sera tu vista principal.
+Aquí es donde ocurre la magia. Crea una carpeta dentro de `src/features/` para tu HU. Aquí pondrás los componentes específicos y la lógica de negocio de ese módulo.
+
+**Carpeta sugerida:** `src/features/adoptions/components/`
+
+Crea tus componentes (ej. `AdoptionList.tsx`, `AdoptionForm.tsx`) dentro de esa carpeta. Esto mantiene el proyecto ordenado y evita que `src/components` se llene de cosas que solo se usan en un lugar.
+
+### Paso 4: Crear la Pagina (Vista)
+
+Ahora, crea un archivo en `src/pages/` que use los componentes de tu **feature**. Esta será la "pantalla" completa que verá el usuario.
 
 **Archivo:** `src/pages/AdoptionPage.tsx`
 
 ```typescript
 import { useEffect, useState } from 'react';
-import { Header } from '../components/Header';
+import { Header } from '../components/layout/Header'; // ¡Ahora está en layout!
 import { getAdoptions } from '../services/adoptionService';
 import { type AdoptionDTO } from '../types/adoption';
+import { AdoptionList } from '../features/adoptions/components/AdoptionList';
 
 export const AdoptionPage = () => {
   const [adoptions, setAdoptions] = useState<AdoptionDTO[]>([]);
@@ -208,7 +191,8 @@ export const AdoptionPage = () => {
     const loadAdoptions = async () => {
       try {
         setLoading(true);
-        const data = await getAdoptions();
+        // Podemos pasar filtros, por ejemplo para ver solo las que están en progreso
+        const data = await getAdoptions({ status: 'PROGRESS' });
         setAdoptions(data);
         setError(null);
       } catch (err) {
@@ -221,49 +205,39 @@ export const AdoptionPage = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-background">
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
-        <main className="flex-1 overflow-y-auto p-8">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-2xl font-semibold text-neutral-800 mb-6">
-              Gestion de Adopciones
-            </h1>
+    <div className="flex h-screen bg-background flex-col overflow-hidden">
+      <Header />
+      <main className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-2xl font-semibold text-neutral-800 mb-6">
+            Gestion de Adopciones
+          </h1>
 
-            {loading && (
-              <div className="text-center py-10">
-                <p className="text-orange-500 animate-pulse">Cargando adopciones...</p>
-              </div>
-            )}
+          {loading && (
+            <div className="text-center py-10">
+              <p className="text-orange-500 animate-pulse">Cargando adopciones...</p>
+            </div>
+          )}
 
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              {error}
+            </div>
+          )}
 
-            {!loading && !error && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {adoptions.map((adoption) => (
-                  <div key={adoption.id} className="bg-white p-6 rounded-lg shadow">
-                    <h3 className="font-bold">{adoption.petName}</h3>
-                    <p>Solicitante: {adoption.adopterName}</p>
-                    <p>Estado: {adoption.status}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </main>
-      </div>
+          {!loading && !error && (
+            <AdoptionList items={adoptions} />
+          )}
+        </div>
+      </main>
     </div>
   );
 };
 ```
 
-### Paso 4: Registrar la Ruta en App.tsx
+### Paso 5: Registrar la Ruta en App.tsx
 
-Edita `src/App.tsx` para agregar la nueva ruta.
+Edita `src/App.tsx` para que React sepa cómo llegar a tu nueva página.
 
 ```typescript
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -288,9 +262,9 @@ function App() {
 export default App;
 ```
 
-### Paso 5: Actualizar el LandingPage (Opcional pero Recomendado)
+### Paso 6: Actualizar el LandingPage (Opcional pero Recomendado)
 
-Edita `src/pages/LandingPage.tsx` para que el modulo de tu HU aparezca como disponible.
+Edita `src/pages/LandingPage.tsx` para que el modulo de tu HU aparezca como disponible. Cambia `active: false` a `active: true` y pon el `path` correcto.
 
 ```typescript
 const modules = [
@@ -307,8 +281,8 @@ const modules = [
     title: 'Modulo de Adopciones (HU02)', 
     description: 'Gestion de solicitudes de adopcion.',
     icon: <Users className="w-12 h-12 text-blue-500" />,
-    active: true, // Cambiar a true
-    path: '/adoptions' // Agregar la ruta
+    active: true, // ¡Actívalo aquí!
+    path: '/adoptions' // Y pon la ruta
   },
   // ... resto de modulos
 ];
@@ -316,11 +290,12 @@ const modules = [
 
 ### Resumen de Archivos a Modificar/Crear
 
-| Accion | Archivo | Descripcion |
-|--------|---------|-------------|
+| Accion | Archivo / Carpeta | Descripcion |
+|--------|-------------------|-------------|
 | Crear | `src/types/nombre.ts` | Definir interfaces de datos |
-| Crear | `src/services/nombreService.ts` | Funciones de API |
-| Crear | `src/pages/NombrePage.tsx` | Vista de la HU |
+| Crear | `src/services/nombreService.ts` | Funciones de API centralizadas |
+| Crear | `src/features/nombre/` | Componentes y lógica específica del módulo |
+| Crear | `src/pages/NombrePage.tsx` | Vista principal de la HU |
 | Editar | `src/App.tsx` | Agregar la ruta |
 | Editar | `src/pages/LandingPage.tsx` | Mostrar modulo como disponible |
 
@@ -341,16 +316,20 @@ Antes de ejecutar el proyecto, asegurate de tener:
 
 El proyecto incluye un `Dockerfile` y `docker-compose.yml` configurados para crear un entorno consistente.
 
-#### Paso 1: Verificar la conexion con el Backend
+#### Paso 1: Configura tu conexión con el Backend
 
-Abre `docker-compose.yml` y asegurate de que la variable `VITE_API_BASE_URL` apunte al puerto correcto de tu backend:
+Ya no tienes que buscar por todo el código. Ahora puedes ajustar el puerto del Backend directamente en el archivo ***docker-compose.yml*** usando la variable ***VITE_API_BASE_URL***:
 
 ```yaml
 environment:
   - VITE_API_BASE_URL=http://localhost:8999/pets
 ```
 
-**Importante:** Si tu backend corre en un puerto diferente a `8999`, cambialo aqui.
+**Súper Importante:** Si cambias el puerto o cualquier variable de entorno, recuerda siempre ejecutar:
+```bash
+docker compose up --build -d
+```
+El flag `--build` es la clave para que el Frontend tome los nuevos cambios de configuración. ¡No lo olvides!
 
 #### Paso 2: Construir y ejecutar
 
@@ -456,10 +435,11 @@ La URL base del API se configura en dos lugares:
 
 2. **En los servicios (`src/services/*.ts`):**
    ```typescript
-   const API_URL = 'http://localhost:8999/api/pets';
+   const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+   const API_URL = `${BASE_URL}/pets`;
    ```
 
-**Nota:** Asegurate de que ambas coincidan con la configuracion de tu backend.
+**Nota:** Siempre usa la variable de entorno para que el puerto sea dinámico y coincida con tu configuración.
 
 ### Manejo de Errores
 
@@ -467,11 +447,12 @@ Todas las peticiones deben estar envueltas en bloques `try-catch` para manejar e
 
 ```typescript
 try {
-  const data = await getAvailablePets();
-  setPets(data);
+  setLoading(true);
+  const data = await getAdoptions({ status: 'PROGRESS' });
+  setAdoptions(data);
   setError(null);
 } catch (err) {
-  setError("No se pudo conectar al servidor. Verifica que el backend este activo.");
+  setError("No se pudo conectar al servidor. Verifica que el backend esté activo.");
 } finally {
   setLoading(false);
 }
@@ -553,11 +534,11 @@ El flujo actual es:
 
 ### Imports
 
-Siempre usar imports absolutos desde `src/`:
+Siempre usar imports absolutos desde `src/` o relativos limpios:
 
 ```typescript
-import { Header } from '../components/Header'; // Bien
-import { PetDTO } from '../types/pet'; // Bien
+import { Header } from '../components/layout/Header';
+import { PetDTO } from '../types/pet'; 
 ```
 
 ### Tipado
@@ -735,3 +716,7 @@ Lista de tareas pendientes para completar el proyecto segun las directrices del 
 Este proyecto es una base modular y escalable. Cada integrante del equipo puede trabajar en su Historia de Usuario de manera independiente siguiendo la estructura de carpetas establecida. Recuerda siempre hacer commits descriptivos y mantener el codigo limpio y organizado.
 
 Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
+er el codigo limpio y organizado.
+
+Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
+ repositorio o contactar al lider del equipo.
