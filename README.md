@@ -35,7 +35,7 @@ Antes de iniciar, asegúrate de que el backend de Spring Boot esté en ejecució
 El frontend necesita conocer la dirección de tu API. Si tu puerto de Spring Boot es distinto al configurado por defecto (ejemplo: 8999), abre el archivo ***docker-compose.yml*** y modifica la línea de ***VITE_API_BASE_URL***:
 
 ```
-- VITE_API_BASE_URL=http://localhost:8999/pets
+- VITE_API_BASE_URL=http://localhost:8999/api
 ```
 
 ### 2. Ejecución con Docker (Recomendado)
@@ -65,7 +65,7 @@ npm install
 
 2. Configurar variables de entorno (Crear archivo ***.env*** en la raíz):
 ```
-VITE_API_BASE_URL=http://localhost:8999/pets
+VITE_API_BASE_URL=http://localhost:8999/api
 ```
 
 3. Iniciar el servidor:
@@ -99,5 +99,4 @@ npm run dev
 
 ## Notas adicionales
 
-Para facilitar el despliegue entre diferentes equipos, el proceso de construcción omite verificaciones estrictas de TypeScript. Si añades nuevos componentes que requieran librerías externas, asegúrate de registrarlas en el archivo package.json. Para mayor comodidad ire agregando en la wiki la estructura que iremos trabajando para tener el proyecto escalable y modular.
-le y modular.
+Para facilitar el despliegue entre diferentes equipos, el proceso de construcción omite verificaciones estrictas de TypeScript. Si añades nuevos componentes que requieran librerías externas, asegúrate de registrarlas en el archivo package.json. Para mayor comodidad ire agregando en la wiki la estructura que iremos trabajando para tener el proyecto sano.
