@@ -1,22 +1,41 @@
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PetHomePage } from './pages/PetHomePage';
 import { LandingPage } from './pages/LandingPage';
-import { ShelterRegistrationPage } from './pages/ShelterRegistrationPage'; // Import the new page
+import { ShelterRegistrationPage } from './pages/ShelterRegistrationPage';
+
+// HU24 — Registro de Adoptante
+import { AdopterRegistrationPage } from './pages/AdopterRegistrationPage';
+
+// HU28 — Registro de Adopción Formal
+import { AdoptionRegistrationPage } from './pages/AdoptionRegistrationPage';
+
+// HU30 — Actualizar Resultado de Convivencia
+import { TrialCohabitationUpdatePage } from './pages/TrialCohabitationUpdatePage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Página de inicio con los 4 modulos (mirar LandingPage, es temporal solamente para el calificable) */}
+        {/* Página de inicio con los módulos */}
         <Route path="/" element={<LandingPage />} />
-        
-        {/* HU01 */}
+
+        {/* HU01 — Inventario de mascotas */}
         <Route path="/pets" element={<PetHomePage />} />
 
-        {/* HU for Shelter Registration */}
+        {/* HU03 — Registro de Refugios */}
         <Route path="/register-shelter" element={<ShelterRegistrationPage />} />
-        
-        {/* Placeholder para futuras rutas */}
+
+        {/* HU24 — Registro de Adoptante */}
+        <Route path="/register-adopter" element={<AdopterRegistrationPage />} />
+
+        {/* HU28 — Registro de Adopción Formal */}
+        <Route path="/register-adoption" element={<AdoptionRegistrationPage />} />
+
+        {/* HU30 — Actualizar Resultado de Convivencia de Prueba */}
+        <Route path="/update-trial-cohabitation" element={<TrialCohabitationUpdatePage />} />
+
+        {/* Ruta 404 */}
         <Route path="*" element={<div className="p-10">404 - Not Found</div>} />
       </Routes>
     </Router>
