@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom';
-import { PawPrint, Lock, Settings, Users, Heart, ClipboardList } from 'lucide-react';
+import { PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope } from 'lucide-react';
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -47,11 +47,12 @@ export const LandingPage = () => {
       path: '/update-trial-cohabitation',
     },
     {
-      id: 'HU-X',
-      title: 'Módulo de xxxxx (HUxx)',
-      description: 'Próximamente',
-      icon: <Settings className="w-12 h-12 text-gray-500" />,
-      active: false,
+      id: 'HU-VETS',
+      title: 'Consulta de Veterinarios',
+      description: 'Busca veterinarios disponibles para asegurar el bienestar de tu mascota.',
+      icon: <Stethoscope className="w-12 h-12 text-blue-600" />,
+      active: true,
+      path: '/veterinarians',
     },
   ];
 

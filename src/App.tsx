@@ -13,6 +13,9 @@ import { AdoptionRegistrationPage } from './pages/AdoptionRegistrationPage';
 // HU30 — Actualizar Resultado de Convivencia
 import { TrialCohabitationUpdatePage } from './pages/TrialCohabitationUpdatePage';
 
+// HUxx — Consulta de Veterinarios
+import { VeterinarianDirectoryPage } from './pages/VeterinarianDirectoryPage';
+
 function App() {
   return (
     <Router>
@@ -34,6 +37,9 @@ function App() {
 
         {/* HU30 — Actualizar Resultado de Convivencia de Prueba */}
         <Route path="/update-trial-cohabitation" element={<TrialCohabitationUpdatePage />} />
+
+        {/* HUxx — Consulta de Veterinarios */}
+        <Route path="/veterinarians" element={<VeterinarianDirectoryPage />} />
 
         {/* Ruta 404 */}
         <Route path="*" element={<div className="p-10">404 - Not Found</div>} />
