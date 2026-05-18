@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   sonarqube-front:
-    image: sonarqube:lts-community
+    image: sonarqube:community 
     container_name: sonar-front-analysis
     ports:
-      - "9001:9000" 
+      - "9001:9000"
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
     volumes:
@@ -17,4 +17,4 @@ services:
 volumes:
   sonar_front_data:
   sonar_front_extensions:
-  sonar_front_logs:
+  sonar_front_logs: 
