@@ -83,7 +83,7 @@ export const ShelterRegistrationPage = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Prevent submission if any inline validation error is present
