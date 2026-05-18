@@ -107,7 +107,8 @@ export function VeterinaryDirectory({ selectedSpecialty }: Readonly<VeterinaryDi
 
         <div className="mb-4">
           <p className="text-gray-600">
-            Showing {filteredVeterinarians.length} veterinarian{filteredVeterinarians.length !== 1 ? 's' : ''}
+            Showing {filteredVeterinarians.length}{' '}
+            {filteredVeterinarians.length === 1 ? 'veterinarian' : 'veterinarians'}
           </p>
         </div>
 
