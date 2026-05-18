@@ -60,7 +60,7 @@ export function TrialCohabitationUpdateForm() {
     try {
       const data = await getTrialCohabitationById(Number(searchId));
       setTrialData(data);
-      setNewResult((data.result as TrialCohabitationResult) || 'EN_PROCESO');
+      setNewResult(data.result || 'EN_PROCESO');
     } catch (err) {
       setSearchError(
         err?.response?.status === 404
@@ -197,10 +197,10 @@ export function TrialCohabitationUpdateForm() {
                 </p>
                 <span
                   className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
-                    resultColors[(trialData.result as TrialCohabitationResult) || 'EN_PROCESO']
+                    resultColors[trialData.result || 'EN_PROCESO']
                   }`}
                 >
-                  {resultLabels[(trialData.result as TrialCohabitationResult) || 'EN_PROCESO']}
+                  {resultLabels[trialData.result || 'EN_PROCESO']}
                 </span>
               </div>
  
@@ -228,7 +228,7 @@ export function TrialCohabitationUpdateForm() {
               </div>
  
               {/* Indicador visual del nuevo resultado seleccionado */}
-              {newResult !== (trialData.result as TrialCohabitationResult) && (
+              {newResult !== (trialData.result || 'EN_PROCESO') && (
                 <div className="flex items-center gap-3 p-4 bg-orange-50 border border-orange-200 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0" />
                   <p className="text-sm text-orange-800">
