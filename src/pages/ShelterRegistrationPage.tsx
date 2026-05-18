@@ -38,7 +38,7 @@ export const ShelterRegistrationPage = () => {
   const [emailCheckLoading, setEmailCheckLoading] = useState(false);
 
   const maxDescriptionLength = 500;
-  const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+  const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.email);
 
   const handleBlur = (field: 'name' | 'city' | 'email') => {
     setTouched({ ...touched, [field]: true });

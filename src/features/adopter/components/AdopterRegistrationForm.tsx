@@ -41,7 +41,7 @@ export function AdopterRegistrationForm() {
 
   // Validaciones inline — mismo patrón que ShelterRegistrationPage
   const isEmailValid =
-    formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+    formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.email);
   const isPhoneValid = formData.phone.length >= 7;
   const isPasswordValid = formData.password.length >= 6;
 
