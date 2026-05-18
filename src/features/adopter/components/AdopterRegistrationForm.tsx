@@ -56,10 +56,7 @@ export function AdopterRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Marcar todos como touched para mostrar errores
+  const validateForm = () => {
     setTouched({
       name: true,
       email: true,
@@ -70,16 +67,42 @@ export function AdopterRegistrationForm() {
       hasOtherPets: true,
     });
 
-    // Validar campos obligatorios
-    if (
-      !formData.name ||
-      !isEmailValid ||
-      !isPhoneValid ||
-      !isPasswordValid ||
-      !formData.housingType ||
-      formData.hasChildren === '' ||
-      formData.hasOtherPets === ''
-    ) {
+    return !!(
+      formData.name &&
+      isEmailValid &&
+      isPhoneValid &&
+      isPasswordValid &&
+      formData.housingType &&
+      formData.hasChildren !== '' &&
+      formData.hasOtherPets !== ''
+    );
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      housingType: '',
+      hasChildren: '',
+      hasOtherPets: '',
+    });
+    setTouched({
+      name: false,
+      email: false,
+      phone: false,
+      password: false,
+      housingType: false,
+      hasChildren: false,
+      hasOtherPets: false,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
       return;
     }
 
@@ -97,26 +120,7 @@ export function AdopterRegistrationForm() {
 
       setSubmissionStatus('success');
       setShowSuccessDialog(true);
-
-      // Reset formulario
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        housingType: '',
-        hasChildren: '',
-        hasOtherPets: '',
-      });
-      setTouched({
-        name: false,
-        email: false,
-        phone: false,
-        password: false,
-        housingType: false,
-        hasChildren: false,
-        hasOtherPets: false,
-      });
+      resetForm();
     } catch (err) {
       setSubmissionStatus('error');
       const message =
