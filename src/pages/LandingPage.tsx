@@ -69,7 +69,7 @@ export const LandingPage = () => {
         {modules.map((module) => (
           <button
             key={module.id}
-            onClick={() => module.active && navigate(module.path!)}
+            onClick={() => module.active && navigate(module.path)}
             disabled={!module.active}
             className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
               ${
