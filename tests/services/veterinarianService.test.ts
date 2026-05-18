@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import axios from 'axios';
-import { getVeterinarians, getVeterinarianById } from '../src/services/veterinarianService';
+import { getVeterinarians, getVeterinarianById } from '../../src/services/veterinarianService';
 
 vi.mock('axios');
 
