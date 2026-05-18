@@ -720,3 +720,32 @@ er el codigo limpio y organizado.
 
 Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
  repositorio o contactar al lider del equipo.
+
+# Estrategia de Testing
+
+Para mantener la salud del proyecto, todos los nuevos servicios y componentes deben contar con pruebas unitarias o de integración.
+
+## Cómo crear un test para un Service
+
+Para crear un test de un servicio, sigue estos pasos:
+
+1. Crea un archivo en `tests/services/` con el sufijo `.test.ts` (ej. `tests/services/veterinarianService.test.ts`).
+2. Utiliza `vitest` y mockea `axios`.
+3. Asegúrate de cubrir los casos de éxito y manejo de errores.
+
+### Ejemplo:
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+import axios from 'axios';
+import { getVeterinarians } from '../src/services/veterinarianService';
+
+vi.mock('axios');
+
+describe('veterinarianService', () => {
+  it('should fetch data correctly', async () => {
+    vi.mocked(axios.get).mockResolvedValue({ data: [] });
+    const result = await getVeterinarians();
+    expect(result).toEqual([]);
+  });
+});
+```
