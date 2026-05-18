@@ -78,7 +78,7 @@ export function TrialCohabitationUpdateForm() {
  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!trialData || !trialData.id) return;
+    if (!trialData?.id) return;
  
     setSubmissionStatus('loading');
     try {
