@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { AlertCircle, CheckCircle } from 'lucide-react';
+import { FormError } from '../../../components/shared/FormError';
 import { registerAdoption } from '../../../services/adoptionService';
 import {
   Dialog,
@@ -124,10 +125,7 @@ export function AdoptionRegistrationForm() {
                 required
               />
               {touched.adoptionDate && !isDateValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Adoption date is required
-                </p>
+                <FormError message="Adoption date is required" />
               )}
               <p className="text-xs text-gray-500 mt-1">
                 Once registered, the adoption date cannot be modified.
@@ -173,10 +171,7 @@ export function AdoptionRegistrationForm() {
                 required
               />
               {touched.adopterId && !isAdopterIdValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  A valid adopter ID is required
-                </p>
+                <FormError message="A valid adopter ID is required" />
               )}
               <p className="text-xs text-gray-500 mt-1">
                 Enter the ID of the registered adopter.
@@ -204,10 +199,7 @@ export function AdoptionRegistrationForm() {
                 required
               />
               {touched.petId && !isPetIdValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  A valid pet ID is required
-                </p>
+                <FormError message="A valid pet ID is required" />
               )}
               <p className="text-xs text-gray-500 mt-1">
                 Enter the ID of the pet being adopted.

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { registerShelter, checkShelterNameExists, checkShelterEmailExists } from '../services/shelterService';
 import { AlertCircle, Check, Upload, CheckCircle } from 'lucide-react';
+import { FormError } from '../components/shared/FormError';
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -155,16 +156,10 @@ export const ShelterRegistrationPage = () => {
                 <p className="text-gray-500 text-xs mt-1 flex items-center gap-1">Checking name...</p>
               )}
               {nameExistsError && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This shelter name already exists
-                </p>
+                <FormError message="This shelter name already exists" />
               )}
-              {touched.name && !formData.name && ( // Original error for empty name
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Shelter name is required
-                </p>
+              {touched.name && !formData.name && (
+                <FormError message="Shelter name is required" />
               )}
             </div>
 
@@ -197,10 +192,7 @@ export const ShelterRegistrationPage = () => {
                 <option value="Ibagué">Ibagué</option>
               </select>
               {touched.city && !formData.city && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  City is required
-                </p>
+                <FormError message="City is required" />
               )}
             </div>
 
@@ -235,16 +227,10 @@ export const ShelterRegistrationPage = () => {
                 )}
               </div>
               {emailExistsError && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This shelter email already exists
-                </p>
+                <FormError message="This shelter email already exists" />
               )}
               {touched.email && !isEmailValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Please enter a valid email address
-                </p>
+                <FormError message="Please enter a valid email address" />
               )}
             </div>
 

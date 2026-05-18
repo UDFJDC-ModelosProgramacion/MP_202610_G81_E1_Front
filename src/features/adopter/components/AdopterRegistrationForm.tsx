@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Check, AlertCircle, CheckCircle } from 'lucide-react';
+import { FormError } from '../../../components/shared/FormError';
 import { registerAdopter } from '../../../services/adopterService';
 import {
   Dialog,
@@ -169,10 +170,7 @@ export function AdopterRegistrationForm() {
                 required
               />
               {touched.name && !formData.name && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Full name is required
-                </p>
+                <FormError message="Full name is required" />
               )}
             </div>
 
@@ -205,10 +203,7 @@ export function AdopterRegistrationForm() {
                 )}
               </div>
               {touched.email && !isEmailValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Please enter a valid email address
-                </p>
+                <FormError message="Please enter a valid email address" />
               )}
             </div>
 
@@ -232,10 +227,7 @@ export function AdopterRegistrationForm() {
                 required
               />
               {touched.phone && !isPhoneValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Phone number must be at least 7 digits
-                </p>
+                <FormError message="Phone number must be at least 7 digits" />
               )}
             </div>
 
@@ -259,10 +251,7 @@ export function AdopterRegistrationForm() {
                 required
               />
               {touched.password && !isPasswordValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Password must be at least 6 characters
-                </p>
+                <FormError message="Password must be at least 6 characters" />
               )}
             </div>
 
@@ -289,10 +278,7 @@ export function AdopterRegistrationForm() {
                 <option value="FARM">Farm / Rural</option>
               </select>
               {touched.housingType && !formData.housingType && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Housing type is required
-                </p>
+                <FormError message="Housing type is required" />
               )}
             </div>
 
@@ -318,10 +304,7 @@ export function AdopterRegistrationForm() {
                 <option value="false">No</option>
               </select>
               {touched.hasChildren && formData.hasChildren === '' && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This field is required
-                </p>
+                <FormError message="This field is required" />
               )}
             </div>
 
@@ -347,10 +330,7 @@ export function AdopterRegistrationForm() {
                 <option value="false">No</option>
               </select>
               {touched.hasOtherPets && formData.hasOtherPets === '' && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This field is required
-                </p>
+                <FormError message="This field is required" />
               )}
             </div>
 
