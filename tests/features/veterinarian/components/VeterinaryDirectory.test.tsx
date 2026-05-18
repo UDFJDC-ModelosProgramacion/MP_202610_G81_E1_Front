@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { VeterinaryDirectory } from '../../../../src/features/veterinarian/components/VeterinaryDirectory';
 import * as vetService from '../../../../src/services/veterinarianService';
 
@@ -18,7 +18,9 @@ describe('VeterinaryDirectory Component', () => {
     ];
     vi.mocked(vetService.getVeterinarians).mockResolvedValue(mockVets as any);
 
-    render(<VeterinaryDirectory selectedSpecialty="all" />);
+    await act(async () => {
+      render(<VeterinaryDirectory selectedSpecialty="all" />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText('Dr. Test')).toBeInTheDocument();
@@ -28,7 +30,9 @@ describe('VeterinaryDirectory Component', () => {
   it('should render error state when API fails', async () => {
     vi.mocked(vetService.getVeterinarians).mockRejectedValue(new Error('API Error'));
 
-    render(<VeterinaryDirectory selectedSpecialty="all" />);
+    await act(async () => {
+      render(<VeterinaryDirectory selectedSpecialty="all" />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText(/Failed to load veterinarians/i)).toBeInTheDocument();
@@ -42,7 +46,9 @@ describe('VeterinaryDirectory Component', () => {
     ];
     vi.mocked(vetService.getVeterinarians).mockResolvedValue(mockVets as any);
 
-    render(<VeterinaryDirectory selectedSpecialty="all" />);
+    await act(async () => {
+      render(<VeterinaryDirectory selectedSpecialty="all" />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText('Dr. Andrea')).toBeInTheDocument();
@@ -62,7 +68,9 @@ describe('VeterinaryDirectory Component', () => {
     ];
     vi.mocked(vetService.getVeterinarians).mockResolvedValue(mockVets as any);
 
-    render(<VeterinaryDirectory selectedSpecialty="Surgery" />);
+    await act(async () => {
+      render(<VeterinaryDirectory selectedSpecialty="Surgery" />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText(/No veterinarians found matching your criteria/i)).toBeInTheDocument();
@@ -76,7 +84,9 @@ describe('VeterinaryDirectory Component', () => {
     ];
     vi.mocked(vetService.getVeterinarians).mockResolvedValue(mockVets as any);
 
-    render(<VeterinaryDirectory selectedSpecialty="Surgery" />);
+    await act(async () => {
+      render(<VeterinaryDirectory selectedSpecialty="Surgery" />);
+    });
     
     await waitFor(() => {
       expect(screen.getByText('Dr. Carlos')).toBeInTheDocument();
