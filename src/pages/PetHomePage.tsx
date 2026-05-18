@@ -19,7 +19,7 @@ export const PetHomePage = () => {
         const data = await getAvailablePets(filters);
         setPets(data);
         setError(null);
-      } catch (err) {
+      } catch {
         setError("Could not connect to the server.");
       } finally {
         setLoading(false);

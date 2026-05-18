@@ -109,7 +109,7 @@ export const ShelterRegistrationPage = () => {
         description: '',
       });
       setTouched({ name: false, city: false, email: false }); // Reset touched state
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       console.error('Failed to register shelter:', err); // Log error for debugging
 

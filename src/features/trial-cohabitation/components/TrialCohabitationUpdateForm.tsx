@@ -61,7 +61,7 @@ export function TrialCohabitationUpdateForm() {
       const data = await getTrialCohabitationById(Number(searchId));
       setTrialData(data);
       setNewResult((data.result as TrialCohabitationResult) || 'EN_PROCESO');
-    } catch (err: any) {
+    } catch (err) {
       setSearchError(
         err?.response?.status === 404
           ? `Trial cohabitation with ID ${searchId} not found.`
@@ -94,7 +94,7 @@ export function TrialCohabitationUpdateForm() {
       setTrialData(null);
       setSearchId('');
       setNewResult('EN_PROCESO');
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       const message =
         err?.response?.data?.message ||

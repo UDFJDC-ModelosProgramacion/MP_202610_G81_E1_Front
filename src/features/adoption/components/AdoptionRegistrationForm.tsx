@@ -72,7 +72,7 @@ export function AdoptionRegistrationForm() {
       // Reset formulario
       setFormData({ adoptionDate: '', status: 'CREATED', adopterId: '', petId: '' });
       setTouched({ adoptionDate: false, adopterId: false, petId: false });
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       const message =
         err?.response?.data?.message ||

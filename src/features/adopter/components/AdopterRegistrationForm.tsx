@@ -116,7 +116,7 @@ export function AdopterRegistrationForm() {
         hasChildren: false,
         hasOtherPets: false,
       });
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       const message =
         err?.response?.data?.message ||
