@@ -13,6 +13,7 @@ vi.mock('../src/App', () => ({
 describe('main.tsx', () => {
   beforeEach(() => {
     vi.resetModules();
+    vi.clearAllMocks();
     document.body.innerHTML = '<div id="root"></div>';
   });
 
@@ -28,9 +29,7 @@ describe('main.tsx', () => {
     vi.resetModules();
     const { createRoot } = await import('react-dom/client');
     await import('../src/main');
-    // If we already ran it in the previous test, it might be tricky.
-    // But since we reset modules, it should run again.
-    // In main.tsx, if rootElement is null, createRoot is not called.
-    // However, vitest might have cached the module execution.
+    
+    expect(createRoot).not.toHaveBeenCalled();
   });
 });
