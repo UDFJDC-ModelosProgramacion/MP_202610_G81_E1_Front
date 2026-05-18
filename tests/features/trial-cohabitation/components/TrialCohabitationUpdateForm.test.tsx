@@ -38,6 +38,18 @@ describe('TrialCohabitationUpdateForm', () => {
     });
   });
 
+  it('triggers search on Enter key', async () => {
+    vi.mocked(trialService.getTrialCohabitationById).mockResolvedValue({ id: 1 } as any);
+    mockRender();
+    const searchInput = screen.getByPlaceholderText(/Enter trial cohabitation ID/i);
+    fireEvent.change(searchInput, { target: { value: '1' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+    
+    await waitFor(() => {
+      expect(trialService.getTrialCohabitationById).toHaveBeenCalledWith(1);
+    });
+  });
+
   it('shows trial data after successful search', async () => {
     const mockTrial = {
       id: 1,
@@ -71,7 +83,7 @@ describe('TrialCohabitationUpdateForm', () => {
     });
   });
 
-  it('renders result selector when trial data is loaded', async () => {
+  it('submits update successfully', async () => {
     const mockTrial = {
       id: 1,
       startDate: '2024-01-01',
@@ -79,14 +91,73 @@ describe('TrialCohabitationUpdateForm', () => {
       result: 'EN_PROCESO' as const,
     };
     vi.mocked(trialService.getTrialCohabitationById).mockResolvedValue(mockTrial as any);
+    vi.mocked(trialService.updateTrialCohabitation).mockResolvedValue({} as any);
+    
     mockRender();
     
-    const searchInput = screen.getByPlaceholderText(/Enter trial cohabitation ID/i);
-    fireEvent.change(searchInput, { target: { value: '1' } });
+    // Search first
+    fireEvent.change(screen.getByPlaceholderText(/Enter trial cohabitation ID/i), { target: { value: '1' } });
     fireEvent.click(screen.getByText('Search'));
     
     await waitFor(() => {
       expect(screen.getByLabelText(/New Result/i)).toBeInTheDocument();
     });
+    
+    fireEvent.change(screen.getByLabelText(/New Result/i), { target: { value: 'EXITOSA' } });
+    fireEvent.click(screen.getByText('Update Result'));
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Result Updated Successfully!/i)).toBeInTheDocument();
+    });
+    
+    fireEvent.click(screen.getByText('Accept'));
+    expect(screen.queryByText(/Result Updated Successfully!/i)).not.toBeInTheDocument();
+  });
+
+  it('shows error dialog on update failure', async () => {
+    const mockTrial = {
+      id: 1,
+      startDate: '2024-01-01',
+      endDate: '2024-01-15',
+      result: 'EN_PROCESO' as const,
+    };
+    vi.mocked(trialService.getTrialCohabitationById).mockResolvedValue(mockTrial as any);
+    vi.mocked(trialService.updateTrialCohabitation).mockRejectedValue({
+      response: { data: { message: 'Update failed' } }
+    });
+    
+    mockRender();
+    
+    fireEvent.change(screen.getByPlaceholderText(/Enter trial cohabitation ID/i), { target: { value: '1' } });
+    fireEvent.click(screen.getByText('Search'));
+    
+    await waitFor(() => {
+      expect(screen.getByLabelText(/New Result/i)).toBeInTheDocument();
+    });
+    
+    fireEvent.click(screen.getByText('Update Result'));
+    
+    await waitFor(() => {
+      expect(screen.getByText('Update failed')).toBeInTheDocument();
+    });
+    
+    fireEvent.click(screen.getByText('Accept'));
+    expect(screen.queryByText('Update failed')).not.toBeInTheDocument();
+  });
+
+  it('clears trial data on cancel', async () => {
+    const mockTrial = { id: 1, result: 'EN_PROCESO' };
+    vi.mocked(trialService.getTrialCohabitationById).mockResolvedValue(mockTrial as any);
+    mockRender();
+    
+    fireEvent.change(screen.getByPlaceholderText(/Enter trial cohabitation ID/i), { target: { value: '1' } });
+    fireEvent.click(screen.getByText('Search'));
+    
+    await waitFor(() => {
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+    });
+    
+    fireEvent.click(screen.getByText('Cancel'));
+    expect(screen.queryByText('Cancel')).not.toBeInTheDocument();
   });
 });

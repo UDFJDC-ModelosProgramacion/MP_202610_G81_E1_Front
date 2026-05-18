@@ -3,11 +3,13 @@ import { describe, it, expect, vi } from 'vitest';
 import { LandingPage } from '../../src/pages/LandingPage';
 import { BrowserRouter } from 'react-router-dom';
 
+const mockNavigate = vi.fn();
+
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...(actual as any),
-    useNavigate: () => vi.fn(),
+    useNavigate: () => mockNavigate,
   };
 });
 
@@ -52,5 +54,16 @@ describe('LandingPage', () => {
     );
     const badges = screen.getAllByText('Disponible');
     expect(badges.length).toBe(6);
+  });
+
+  it('navigates to module path when clicked', () => {
+    render(
+      <BrowserRouter>
+        <LandingPage />
+      </BrowserRouter>
+    );
+    const petModule = screen.getByText('Módulo de Mascotas (HU01)');
+    fireEvent.click(petModule);
+    expect(mockNavigate).toHaveBeenCalledWith('/pets');
   });
 });

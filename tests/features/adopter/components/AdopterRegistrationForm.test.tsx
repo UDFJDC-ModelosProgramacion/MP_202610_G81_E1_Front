@@ -15,6 +15,7 @@ const mockRender = () => render(
 describe('AdopterRegistrationForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    globalThis.history.back = vi.fn();
   });
 
   it('renders form title', () => {
@@ -77,7 +78,7 @@ describe('AdopterRegistrationForm', () => {
     });
   });
 
-  it('shows success dialog on successful registration', async () => {
+  it('submits successfully and shows success dialog', async () => {
     vi.mocked(adopterService.registerAdopter).mockResolvedValue({} as any);
     mockRender();
     
@@ -85,9 +86,54 @@ describe('AdopterRegistrationForm', () => {
     fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'john@example.com' } });
     fireEvent.change(screen.getByLabelText(/Phone Number/i), { target: { value: '1234567' } });
     fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/Housing Type/i), { target: { value: 'HOUSE' } });
+    fireEvent.change(screen.getByLabelText(/Do you have children/i), { target: { value: 'false' } });
+    fireEvent.change(screen.getByLabelText(/Do you have other pets/i), { target: { value: 'true' } });
+    
+    fireEvent.click(screen.getByRole('button', { name: /Register as Adopter/i }));
     
     await waitFor(() => {
-      expect(screen.getByLabelText(/Housing Type/i)).toBeInTheDocument();
+      expect(screen.getByText(/Adopter Registered Successfully!/i)).toBeInTheDocument();
     });
+    
+    fireEvent.click(screen.getByText('Accept'));
+    expect(globalThis.history.back).toHaveBeenCalled();
+  });
+
+  it('shows error dialog on submission failure', async () => {
+    vi.mocked(adopterService.registerAdopter).mockRejectedValue({
+      response: { data: { message: 'Registration failed' } }
+    });
+    mockRender();
+    
+    // Fill minimum required fields
+    fireEvent.change(screen.getByLabelText(/Full Name/i), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByLabelText(/Email Address/i), { target: { value: 'john@example.com' } });
+    fireEvent.change(screen.getByLabelText(/Phone Number/i), { target: { value: '1234567' } });
+    fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/Housing Type/i), { target: { value: 'HOUSE' } });
+    fireEvent.change(screen.getByLabelText(/Do you have children/i), { target: { value: 'false' } });
+    fireEvent.change(screen.getByLabelText(/Do you have other pets/i), { target: { value: 'true' } });
+    
+    fireEvent.click(screen.getByRole('button', { name: /Register as Adopter/i }));
+    
+    await waitFor(() => {
+      expect(screen.getByText('Registration failed')).toBeInTheDocument();
+    });
+    
+    fireEvent.click(screen.getByText('Accept'));
+    expect(screen.queryByText('Registration failed')).not.toBeInTheDocument();
+  });
+
+  it('returns early if form is invalid on submit', async () => {
+    mockRender();
+    fireEvent.click(screen.getByRole('button', { name: /Register as Adopter/i }));
+    expect(adopterService.registerAdopter).not.toHaveBeenCalled();
+  });
+
+  it('calls history.back on cancel', () => {
+    mockRender();
+    fireEvent.click(screen.getByText('Cancel'));
+    expect(globalThis.history.back).toHaveBeenCalled();
   });
 });
