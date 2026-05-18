@@ -1,23 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { VeterinaryDirectory } from '../../../../src/features/veterinarian/components/VeterinaryDirectory';
 import * as vetService from '../../../../src/services/veterinarianService';
 
 vi.mock('../../../../src/services/veterinarianService');
-
-// Mock PointerEvent for Radix UI select
-window.PointerEvent = class PointerEvent extends Event {
-  button: number;
-  ctrlKey: boolean;
-  pointerType: string;
-  constructor(type: string, props: any) {
-    super(type, props);
-    this.button = props.button || 0;
-    this.ctrlKey = props.ctrlKey || false;
-    this.pointerType = props.pointerType || 'mouse';
-  }
-} as any;
 
 describe('VeterinaryDirectory Component', () => {
   it('should render loading state initially', () => {
@@ -64,7 +50,7 @@ describe('VeterinaryDirectory Component', () => {
     });
 
     const searchInput = screen.getByPlaceholderText(/Search by specialty or name/i);
-    await userEvent.type(searchInput, 'Andrea');
+    fireEvent.change(searchInput, { target: { value: 'Andrea' } });
 
     expect(screen.getByText('Dr. Andrea')).toBeInTheDocument();
     expect(screen.queryByText('Dr. Carlos')).not.toBeInTheDocument();
