@@ -360,7 +360,7 @@ export function AdopterRegistrationForm() {
           <div className="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
             <button
               type="button"
-              onClick={() => window.history.back()}
+              onClick={() => globalThis.history.back()}
               className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
@@ -395,7 +395,7 @@ export function AdopterRegistrationForm() {
               className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium shadow-sm"
               onClick={() => {
                 setShowSuccessDialog(false);
-                window.history.back();
+                globalThis.history.back();
               }}
             >
               Accept
