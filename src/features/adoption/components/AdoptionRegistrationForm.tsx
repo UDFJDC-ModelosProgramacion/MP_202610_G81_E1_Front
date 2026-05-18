@@ -1,5 +1,5 @@
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { AlertCircle, CheckCircle } from 'lucide-react';
 import { registerAdoption } from '../../../services/adoptionService';
 import {
@@ -47,7 +47,7 @@ export function AdoptionRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Marcar todos como touched
@@ -107,7 +107,7 @@ export function AdoptionRegistrationForm() {
 
             {/* Fecha de adopción — campo clave HU28 */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="adoptionDate" className="block text-sm font-medium text-gray-700 mb-2">
                 Adoption Date <span className="text-red-500">*</span>
               </label>
               <input
@@ -136,7 +136,7 @@ export function AdoptionRegistrationForm() {
 
             {/* Estado de adopción */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
                 Adoption Status
               </label>
               <select
@@ -154,7 +154,7 @@ export function AdoptionRegistrationForm() {
 
             {/* ID del Adoptante */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="adopterId" className="block text-sm font-medium text-gray-700 mb-2">
                 Adopter ID <span className="text-red-500">*</span>
               </label>
               <input
@@ -185,7 +185,7 @@ export function AdoptionRegistrationForm() {
 
             {/* ID de la Mascota */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="petId" className="block text-sm font-medium text-gray-700 mb-2">
                 Pet ID <span className="text-red-500">*</span>
               </label>
               <input

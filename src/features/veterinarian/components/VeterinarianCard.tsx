@@ -8,7 +8,7 @@ interface VeterinarianCardProps {
   vet: VeterinarianDetailDTO;
 }
 
-export function VeterinarianCard({ vet }: VeterinarianCardProps) {
+export function VeterinarianCard({ vet }: Readonly<VeterinarianCardProps>) {
   return (
     <Card className="hover:shadow-md transition-shadow">
       <CardContent className="p-6">

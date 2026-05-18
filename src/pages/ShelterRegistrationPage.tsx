@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { registerShelter, checkShelterNameExists, checkShelterEmailExists } from '../services/shelterService';
 import { AlertCircle, Check, Upload, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -83,7 +83,7 @@ export const ShelterRegistrationPage = () => {
     }
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Prevent submission if any inline validation error is present
@@ -134,7 +134,7 @@ export const ShelterRegistrationPage = () => {
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Shelter Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -169,7 +169,7 @@ export const ShelterRegistrationPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
                 City <span className="text-red-500">*</span>
               </label>
               <select
@@ -205,7 +205,7 @@ export const ShelterRegistrationPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Official Email <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -249,7 +249,7 @@ export const ShelterRegistrationPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="gallery" className="block text-sm font-medium text-gray-700 mb-2">
                 Gallery Link or Image URL
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-green-400 transition-colors">
@@ -276,7 +276,7 @@ export const ShelterRegistrationPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                 About the Shelter
               </label>
               <textarea

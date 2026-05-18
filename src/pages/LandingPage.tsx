@@ -67,9 +67,10 @@ export const LandingPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full">
         {modules.map((module) => (
-          <div
+          <button
             key={module.id}
             onClick={() => module.active && navigate(module.path!)}
+            disabled={!module.active}
             className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
               ${
                 module.active
@@ -85,7 +86,7 @@ export const LandingPage = () => {
                 Disponible
               </span>
             )}
-          </div>
+          </button>
         ))}
       </div>
     </div>

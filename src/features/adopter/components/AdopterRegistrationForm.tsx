@@ -1,5 +1,5 @@
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { Check, AlertCircle, CheckCircle } from 'lucide-react';
 import { registerAdopter } from '../../../services/adopterService';
 import {
@@ -55,7 +55,7 @@ export function AdopterRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Marcar todos como touched para mostrar errores
@@ -151,7 +151,7 @@ export function AdopterRegistrationForm() {
 
             {/* Nombre */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -178,7 +178,7 @@ export function AdopterRegistrationForm() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -214,7 +214,7 @@ export function AdopterRegistrationForm() {
 
             {/* Teléfono */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone Number <span className="text-red-500">*</span>
               </label>
               <input
@@ -241,7 +241,7 @@ export function AdopterRegistrationForm() {
 
             {/* Contraseña */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password <span className="text-red-500">*</span>
               </label>
               <input
@@ -268,7 +268,7 @@ export function AdopterRegistrationForm() {
 
             {/* Tipo de vivienda */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="housingType" className="block text-sm font-medium text-gray-700 mb-2">
                 Housing Type <span className="text-red-500">*</span>
               </label>
               <select
@@ -298,7 +298,7 @@ export function AdopterRegistrationForm() {
 
             {/* ¿Tiene hijos? */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="hasChildren" className="block text-sm font-medium text-gray-700 mb-2">
                 Do you have children at home? <span className="text-red-500">*</span>
               </label>
               <select
@@ -327,7 +327,7 @@ export function AdopterRegistrationForm() {
 
             {/* ¿Tiene otras mascotas? */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="hasOtherPets" className="block text-sm font-medium text-gray-700 mb-2">
                 Do you have other pets at home? <span className="text-red-500">*</span>
               </label>
               <select

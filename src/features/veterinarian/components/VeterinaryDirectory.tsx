@@ -10,7 +10,7 @@ interface VeterinaryDirectoryProps {
   selectedSpecialty: string;
 }
 
-export function VeterinaryDirectory({ selectedSpecialty }: VeterinaryDirectoryProps) {
+export function VeterinaryDirectory({ selectedSpecialty }: Readonly<VeterinaryDirectoryProps>) {
   const [veterinarians, setVeterinarians] = useState<VeterinarianDetailDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

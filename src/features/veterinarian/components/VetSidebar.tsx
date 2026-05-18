@@ -14,7 +14,7 @@ const specialties = [
   { id: 'vaccination', name: 'Vaccination', icon: Syringe }
 ];
 
-export function VetSidebar({ selectedSpecialty, onSpecialtyChange }: VetSidebarProps) {
+export function VetSidebar({ selectedSpecialty, onSpecialtyChange }: Readonly<VetSidebarProps>) {
   return (
     <aside className="w-64 bg-white border-r border-gray-200 p-6 hidden md:block">
       <h2 className="font-semibold text-lg text-gray-900 mb-6">Specialties</h2>
