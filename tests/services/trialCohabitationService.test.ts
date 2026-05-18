@@ -31,7 +31,7 @@ describe('trialCohabitationService', () => {
     (axios.put as any).mockResolvedValue({ data: mockData });
     
     const result = await updateTrialCohabitation(1, mockData as any);
-    expect(axios.put).toHaveBeenCalledWith(expect.stringContaining1'), mockData);
+    expect(axios.put).toHaveBeenCalledWith(expect.stringContaining('/1'), mockData);
     expect(result).toEqual(mockData);
   });
 });

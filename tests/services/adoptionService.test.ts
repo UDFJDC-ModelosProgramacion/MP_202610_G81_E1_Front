@@ -32,7 +32,7 @@ describe('adoptionService', () => {
     (axios.get as any).mockResolvedValue({ data: mockAdoption });
     
     const result = await getAdoptionById(1);
-    expect(axios.get).toHaveBeenCalledWith(expect.stringContaining1'));
+    expect(axios.get).toHaveBeenCalledWith(expect.stringContaining('/1'));
     expect(result).toEqual(mockAdoption);
   });
 });

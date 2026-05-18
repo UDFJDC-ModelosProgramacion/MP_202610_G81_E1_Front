@@ -19,4 +19,15 @@ describe('petService', () => {
     });
     expect(result).toEqual(mockPets);
   });
+
+  it('getAvailablePets should pass filters to API', async () => {
+    const mockPets = [{ id: 1, name: 'Dog' }];
+    (axios.get as any).mockResolvedValue({ data: mockPets });
+    
+    const result = await getAvailablePets({ species: 'dog', size: 'large' });
+    expect(axios.get).toHaveBeenCalledWith(expect.any(String), {
+      params: { status: 'AVAILABLE', species: 'dog', size: 'large' }
+    });
+    expect(result).toEqual(mockPets);
+  });
 });
