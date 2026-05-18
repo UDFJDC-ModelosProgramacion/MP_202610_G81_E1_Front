@@ -1,6 +1,7 @@
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { Check, AlertCircle, CheckCircle } from 'lucide-react';
+import { FormError } from '../../../components/shared/FormError';
 import { registerAdopter } from '../../../services/adopterService';
 import {
   Dialog,
@@ -40,7 +41,7 @@ export function AdopterRegistrationForm() {
 
   // Validaciones inline — mismo patrón que ShelterRegistrationPage
   const isEmailValid =
-    formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+    formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.email);
   const isPhoneValid = formData.phone.length >= 7;
   const isPasswordValid = formData.password.length >= 6;
 
@@ -55,10 +56,7 @@ export function AdopterRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    // Marcar todos como touched para mostrar errores
+  const validateForm = () => {
     setTouched({
       name: true,
       email: true,
@@ -69,16 +67,42 @@ export function AdopterRegistrationForm() {
       hasOtherPets: true,
     });
 
-    // Validar campos obligatorios
-    if (
-      !formData.name ||
-      !isEmailValid ||
-      !isPhoneValid ||
-      !isPasswordValid ||
-      !formData.housingType ||
-      formData.hasChildren === '' ||
-      formData.hasOtherPets === ''
-    ) {
+    return !!(
+      formData.name &&
+      isEmailValid &&
+      isPhoneValid &&
+      isPasswordValid &&
+      formData.housingType &&
+      formData.hasChildren !== '' &&
+      formData.hasOtherPets !== ''
+    );
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      housingType: '',
+      hasChildren: '',
+      hasOtherPets: '',
+    });
+    setTouched({
+      name: false,
+      email: false,
+      phone: false,
+      password: false,
+      housingType: false,
+      hasChildren: false,
+      hasOtherPets: false,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
       return;
     }
 
@@ -96,27 +120,8 @@ export function AdopterRegistrationForm() {
 
       setSubmissionStatus('success');
       setShowSuccessDialog(true);
-
-      // Reset formulario
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        housingType: '',
-        hasChildren: '',
-        hasOtherPets: '',
-      });
-      setTouched({
-        name: false,
-        email: false,
-        phone: false,
-        password: false,
-        housingType: false,
-        hasChildren: false,
-        hasOtherPets: false,
-      });
-    } catch (err: any) {
+      resetForm();
+    } catch (err) {
       setSubmissionStatus('error');
       const message =
         err?.response?.data?.message ||
@@ -151,7 +156,7 @@ export function AdopterRegistrationForm() {
 
             {/* Nombre */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -169,16 +174,13 @@ export function AdopterRegistrationForm() {
                 required
               />
               {touched.name && !formData.name && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Full name is required
-                </p>
+                <FormError message="Full name is required" />
               )}
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -205,16 +207,13 @@ export function AdopterRegistrationForm() {
                 )}
               </div>
               {touched.email && !isEmailValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Please enter a valid email address
-                </p>
+                <FormError message="Please enter a valid email address" />
               )}
             </div>
 
             {/* Teléfono */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone Number <span className="text-red-500">*</span>
               </label>
               <input
@@ -232,16 +231,13 @@ export function AdopterRegistrationForm() {
                 required
               />
               {touched.phone && !isPhoneValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Phone number must be at least 7 digits
-                </p>
+                <FormError message="Phone number must be at least 7 digits" />
               )}
             </div>
 
             {/* Contraseña */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password <span className="text-red-500">*</span>
               </label>
               <input
@@ -259,16 +255,13 @@ export function AdopterRegistrationForm() {
                 required
               />
               {touched.password && !isPasswordValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Password must be at least 6 characters
-                </p>
+                <FormError message="Password must be at least 6 characters" />
               )}
             </div>
 
             {/* Tipo de vivienda */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="housingType" className="block text-sm font-medium text-gray-700 mb-2">
                 Housing Type <span className="text-red-500">*</span>
               </label>
               <select
@@ -289,16 +282,13 @@ export function AdopterRegistrationForm() {
                 <option value="FARM">Farm / Rural</option>
               </select>
               {touched.housingType && !formData.housingType && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Housing type is required
-                </p>
+                <FormError message="Housing type is required" />
               )}
             </div>
 
             {/* ¿Tiene hijos? */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="hasChildren" className="block text-sm font-medium text-gray-700 mb-2">
                 Do you have children at home? <span className="text-red-500">*</span>
               </label>
               <select
@@ -318,16 +308,13 @@ export function AdopterRegistrationForm() {
                 <option value="false">No</option>
               </select>
               {touched.hasChildren && formData.hasChildren === '' && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This field is required
-                </p>
+                <FormError message="This field is required" />
               )}
             </div>
 
             {/* ¿Tiene otras mascotas? */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="hasOtherPets" className="block text-sm font-medium text-gray-700 mb-2">
                 Do you have other pets at home? <span className="text-red-500">*</span>
               </label>
               <select
@@ -347,10 +334,7 @@ export function AdopterRegistrationForm() {
                 <option value="false">No</option>
               </select>
               {touched.hasOtherPets && formData.hasOtherPets === '' && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This field is required
-                </p>
+                <FormError message="This field is required" />
               )}
             </div>
 
@@ -360,7 +344,7 @@ export function AdopterRegistrationForm() {
           <div className="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
             <button
               type="button"
-              onClick={() => window.history.back()}
+              onClick={() => globalThis.history.back()}
               className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
@@ -395,7 +379,7 @@ export function AdopterRegistrationForm() {
               className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium shadow-sm"
               onClick={() => {
                 setShowSuccessDialog(false);
-                window.history.back();
+                globalThis.history.back();
               }}
             >
               Accept

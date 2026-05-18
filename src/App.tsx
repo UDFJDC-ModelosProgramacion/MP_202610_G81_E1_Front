@@ -24,6 +24,8 @@ import { ReviewsListPage } from './pages/ReviewsListPage';
 
 // HU23 — Registrar Evento de Refugio
 import { ShelterEventRegistrationPage } from './pages/ShelterEventRegistrationPage';
+// HUxx — Consulta de Veterinarios
+import { VeterinarianDirectoryPage } from './pages/VeterinarianDirectoryPage';
 
 function App() {
   return (
@@ -58,6 +60,8 @@ function App() {
 
         {/* HU23 — Registrar Evento de Refugio */}
         <Route path="/register-shelter-event" element={<ShelterEventRegistrationPage />} />
+        {/* HUxx — Consulta de Veterinarios */}
+        <Route path="/veterinarians" element={<VeterinarianDirectoryPage />} />
 
         {/* Ruta 404 */}
         <Route path="*" element={<div className="p-10">404 - Not Found</div>} />

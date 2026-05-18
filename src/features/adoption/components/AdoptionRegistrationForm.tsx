@@ -1,6 +1,7 @@
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { AlertCircle, CheckCircle } from 'lucide-react';
+import { FormError } from '../../../components/shared/FormError';
 import { registerAdoption } from '../../../services/adoptionService';
 import {
   Dialog,
@@ -47,7 +48,7 @@ export function AdoptionRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Marcar todos como touched
@@ -72,7 +73,7 @@ export function AdoptionRegistrationForm() {
       // Reset formulario
       setFormData({ adoptionDate: '', status: 'CREATED', adopterId: '', petId: '' });
       setTouched({ adoptionDate: false, adopterId: false, petId: false });
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       const message =
         err?.response?.data?.message ||
@@ -107,7 +108,7 @@ export function AdoptionRegistrationForm() {
 
             {/* Fecha de adopción — campo clave HU28 */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="adoptionDate" className="block text-sm font-medium text-gray-700 mb-2">
                 Adoption Date <span className="text-red-500">*</span>
               </label>
               <input
@@ -124,10 +125,7 @@ export function AdoptionRegistrationForm() {
                 required
               />
               {touched.adoptionDate && !isDateValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Adoption date is required
-                </p>
+                <FormError message="Adoption date is required" />
               )}
               <p className="text-xs text-gray-500 mt-1">
                 Once registered, the adoption date cannot be modified.
@@ -136,7 +134,7 @@ export function AdoptionRegistrationForm() {
 
             {/* Estado de adopción */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
                 Adoption Status
               </label>
               <select
@@ -154,7 +152,7 @@ export function AdoptionRegistrationForm() {
 
             {/* ID del Adoptante */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="adopterId" className="block text-sm font-medium text-gray-700 mb-2">
                 Adopter ID <span className="text-red-500">*</span>
               </label>
               <input
@@ -173,10 +171,7 @@ export function AdoptionRegistrationForm() {
                 required
               />
               {touched.adopterId && !isAdopterIdValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  A valid adopter ID is required
-                </p>
+                <FormError message="A valid adopter ID is required" />
               )}
               <p className="text-xs text-gray-500 mt-1">
                 Enter the ID of the registered adopter.
@@ -185,7 +180,7 @@ export function AdoptionRegistrationForm() {
 
             {/* ID de la Mascota */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="petId" className="block text-sm font-medium text-gray-700 mb-2">
                 Pet ID <span className="text-red-500">*</span>
               </label>
               <input
@@ -204,10 +199,7 @@ export function AdoptionRegistrationForm() {
                 required
               />
               {touched.petId && !isPetIdValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  A valid pet ID is required
-                </p>
+                <FormError message="A valid pet ID is required" />
               )}
               <p className="text-xs text-gray-500 mt-1">
                 Enter the ID of the pet being adopted.
@@ -228,7 +220,7 @@ export function AdoptionRegistrationForm() {
           <div className="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
             <button
               type="button"
-              onClick={() => window.history.back()}
+              onClick={() => globalThis.history.back()}
               className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
@@ -263,7 +255,7 @@ export function AdoptionRegistrationForm() {
               className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium shadow-sm"
               onClick={() => {
                 setShowSuccessDialog(false);
-                window.history.back();
+                globalThis.history.back();
               }}
             >
               Accept

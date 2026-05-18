@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { AlertCircle, CheckCircle, Search } from 'lucide-react';
 import {
   getTrialCohabitationById,
@@ -60,8 +60,8 @@ export function TrialCohabitationUpdateForm() {
     try {
       const data = await getTrialCohabitationById(Number(searchId));
       setTrialData(data);
-      setNewResult((data.result as TrialCohabitationResult) || 'EN_PROCESO');
-    } catch (err: any) {
+      setNewResult(data.result || 'EN_PROCESO');
+    } catch (err) {
       setSearchError(
         err?.response?.status === 404
           ? `Trial cohabitation with ID ${searchId} not found.`
@@ -76,9 +76,9 @@ export function TrialCohabitationUpdateForm() {
     if (e.key === 'Enter') handleSearch();
   };
  
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!trialData || !trialData.id) return;
+    if (!trialData?.id) return;
  
     setSubmissionStatus('loading');
     try {
@@ -94,7 +94,7 @@ export function TrialCohabitationUpdateForm() {
       setTrialData(null);
       setSearchId('');
       setNewResult('EN_PROCESO');
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       const message =
         err?.response?.data?.message ||
@@ -127,19 +127,23 @@ export function TrialCohabitationUpdateForm() {
             Search Trial Cohabitation
           </h2>
           <div className="flex gap-3">
-            <input
-              type="number"
-              min="1"
-              value={searchId}
-              onChange={(e) => setSearchId(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-              placeholder="Enter trial cohabitation ID"
-              className={`flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
-                searchError
-                  ? 'border-red-300 focus:ring-red-500'
-                  : 'border-gray-300 focus:ring-orange-500'
-              }`}
-            />
+            <div className="flex-1 flex flex-col">
+              <label htmlFor="search-id" className="sr-only">Trial cohabitation ID</label>
+              <input
+                id="search-id"
+                type="number"
+                min="1"
+                value={searchId}
+                onChange={(e) => setSearchId(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
+                placeholder="Enter trial cohabitation ID"
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all ${
+                  searchError
+                    ? 'border-red-300 focus:ring-red-500'
+                    : 'border-gray-300 focus:ring-orange-500'
+                }`}
+              />
+            </div>
             <button
               type="button"
               onClick={handleSearch}
@@ -193,19 +197,20 @@ export function TrialCohabitationUpdateForm() {
                 </p>
                 <span
                   className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
-                    resultColors[(trialData.result as TrialCohabitationResult) || 'EN_PROCESO']
+                    resultColors[trialData.result || 'EN_PROCESO']
                   }`}
                 >
-                  {resultLabels[(trialData.result as TrialCohabitationResult) || 'EN_PROCESO']}
+                  {resultLabels[trialData.result || 'EN_PROCESO']}
                 </span>
               </div>
  
               {/* Selector de nuevo resultado — campo clave HU30 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="new-result" className="block text-sm font-medium text-gray-700 mb-2">
                   New Result <span className="text-red-500">*</span>
                 </label>
                 <select
+                  id="new-result"
                   value={newResult}
                   onChange={(e) => setNewResult(e.target.value as TrialCohabitationResult)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all bg-white"
@@ -223,7 +228,7 @@ export function TrialCohabitationUpdateForm() {
               </div>
  
               {/* Indicador visual del nuevo resultado seleccionado */}
-              {newResult !== (trialData.result as TrialCohabitationResult) && (
+              {newResult !== (trialData.result || 'EN_PROCESO') && (
                 <div className="flex items-center gap-3 p-4 bg-orange-50 border border-orange-200 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0" />
                   <p className="text-sm text-orange-800">

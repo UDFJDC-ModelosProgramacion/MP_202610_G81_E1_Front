@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom';
-import { PawPrint, Lock, Settings, Users, Heart, ClipboardList } from 'lucide-react';
+import { PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope } from 'lucide-react';
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -47,11 +47,12 @@ export const LandingPage = () => {
       path: '/update-trial-cohabitation',
     },
     {
-      id: 'HU-X',
-      title: 'Módulo de xxxxx (HUxx)',
-      description: 'Próximamente',
-      icon: <Settings className="w-12 h-12 text-gray-500" />,
-      active: false,
+      id: 'HU-VETS',
+      title: 'Consulta de Veterinarios',
+      description: 'Busca veterinarios disponibles para asegurar el bienestar de tu mascota.',
+      icon: <Stethoscope className="w-12 h-12 text-blue-600" />,
+      active: true,
+      path: '/veterinarians',
     },
   ];
 
@@ -66,9 +67,10 @@ export const LandingPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full">
         {modules.map((module) => (
-          <div
+          <button
             key={module.id}
-            onClick={() => module.active && navigate(module.path!)}
+            onClick={() => module.active && navigate(module.path)}
+            disabled={!module.active}
             className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
               ${
                 module.active
@@ -84,7 +86,7 @@ export const LandingPage = () => {
                 Disponible
               </span>
             )}
-          </div>
+          </button>
         ))}
       </div>
     </div>

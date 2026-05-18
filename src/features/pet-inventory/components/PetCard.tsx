@@ -9,7 +9,7 @@ interface PetCardProps {
   shelterName: string;
 }
 
-export function PetCard({ name, breed, age, photos, shelterName }: PetCardProps) {
+export function PetCard({ name, breed, age, photos, shelterName }: Readonly<PetCardProps>) {
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-neutral-100 overflow-hidden group">
       <div className="relative aspect-square overflow-hidden bg-neutral-100">

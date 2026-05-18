@@ -1,6 +1,7 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { registerShelter, checkShelterNameExists, checkShelterEmailExists } from '../services/shelterService';
 import { AlertCircle, Check, Upload, CheckCircle } from 'lucide-react';
+import { FormError } from '../components/shared/FormError';
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -37,7 +38,7 @@ export const ShelterRegistrationPage = () => {
   const [emailCheckLoading, setEmailCheckLoading] = useState(false);
 
   const maxDescriptionLength = 500;
-  const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+  const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.email);
 
   const handleBlur = (field: 'name' | 'city' | 'email') => {
     setTouched({ ...touched, [field]: true });
@@ -83,7 +84,7 @@ export const ShelterRegistrationPage = () => {
     }
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Prevent submission if any inline validation error is present
@@ -109,7 +110,7 @@ export const ShelterRegistrationPage = () => {
         description: '',
       });
       setTouched({ name: false, city: false, email: false }); // Reset touched state
-    } catch (err: any) {
+    } catch (err) {
       setSubmissionStatus('error');
       console.error('Failed to register shelter:', err); // Log error for debugging
 
@@ -134,7 +135,7 @@ export const ShelterRegistrationPage = () => {
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Shelter Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -155,21 +156,15 @@ export const ShelterRegistrationPage = () => {
                 <p className="text-gray-500 text-xs mt-1 flex items-center gap-1">Checking name...</p>
               )}
               {nameExistsError && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This shelter name already exists
-                </p>
+                <FormError message="This shelter name already exists" />
               )}
-              {touched.name && !formData.name && ( // Original error for empty name
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Shelter name is required
-                </p>
+              {touched.name && !formData.name && (
+                <FormError message="Shelter name is required" />
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
                 City <span className="text-red-500">*</span>
               </label>
               <select
@@ -197,15 +192,12 @@ export const ShelterRegistrationPage = () => {
                 <option value="Ibagué">Ibagué</option>
               </select>
               {touched.city && !formData.city && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  City is required
-                </p>
+                <FormError message="City is required" />
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Official Email <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -235,21 +227,15 @@ export const ShelterRegistrationPage = () => {
                 )}
               </div>
               {emailExistsError && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  This shelter email already exists
-                </p>
+                <FormError message="This shelter email already exists" />
               )}
               {touched.email && !isEmailValid && (
-                <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  Please enter a valid email address
-                </p>
+                <FormError message="Please enter a valid email address" />
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="gallery" className="block text-sm font-medium text-gray-700 mb-2">
                 Gallery Link or Image URL
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-green-400 transition-colors">
@@ -276,7 +262,7 @@ export const ShelterRegistrationPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                 About the Shelter
               </label>
               <textarea
@@ -299,7 +285,7 @@ export const ShelterRegistrationPage = () => {
           <div className="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
             <button
               type="button"
-              onClick={() => window.history.back()}
+              onClick={() => globalThis.history.back()}
               className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
