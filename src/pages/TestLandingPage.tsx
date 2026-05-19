@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope } from 'lucide-react';
+import { 
+  PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope, 
+  Bell, MessageSquare, Star, Calendar 
+} from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 
@@ -48,12 +51,44 @@ export const TestLandingPage = () => {
       path: '/update-trial-cohabitation',
     },
     {
-      id: 'HU-VETS',
+      id: 'HU04',
       title: 'Consulta de Veterinarios (HU04)',
       description: 'Busca veterinarios disponibles para asegurar el bienestar de tu mascota.',
       icon: <Stethoscope className="w-12 h-12 text-blue-600" />,
       active: true,
       path: '/veterinarians',
+    },
+    {
+      id: 'HU16-18',
+      title: 'Centro de Notificaciones (HU16-18)',
+      description: 'Visualiza, marca como leídas y elimina tus notificaciones.',
+      icon: <Bell className="w-12 h-12 text-indigo-500" />,
+      active: true,
+      path: '/notifications',
+    },
+    {
+      id: 'HU19',
+      title: 'Mensajería (HU19)',
+      description: 'Envía mensajes directos a los encargados de los refugios.',
+      icon: <MessageSquare className="w-12 h-12 text-emerald-500" />,
+      active: true,
+      path: '/send-message',
+    },
+    {
+      id: 'HU20-22',
+      title: 'Gestión de Reseñas (HU20-22)',
+      description: 'Crea, visualiza y elimina reseñas sobre mascotas y procesos.',
+      icon: <Star className="w-12 h-12 text-yellow-500" />,
+      active: true,
+      path: '/reviews',
+    },
+    {
+      id: 'HU23',
+      title: 'Eventos de Refugio (HU23)',
+      description: 'Registra y gestiona eventos especiales organizados por refugios.',
+      icon: <Calendar className="w-12 h-12 text-pink-500" />,
+      active: true,
+      path: '/register-shelter-event',
     },
   ];
 
@@ -64,7 +99,7 @@ export const TestLandingPage = () => {
         <header className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-neutral-800 mb-4">Developer Test Environment</h1>
           <p className="text-neutral-600 italic">
-            Módulos funcionales disponibles para pruebas internas
+            Panel de control para pruebas de Historias de Usuario integradas
           </p>
         </header>
 

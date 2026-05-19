@@ -2,5 +2,5 @@ projectKey=MP_202610_G81_E1_Front
 serverUrl=http://localhost:9001
 serverVersion=26.5.0.122743
 dashboardUrl=http://localhost:9001/dashboard?id=MP_202610_G81_E1_Front
-ceTaskId=bbf59629-0658-4581-b889-05d913e8be2b
-ceTaskUrl=http://localhost:9001/api/ce/task?id=bbf59629-0658-4581-b889-05d913e8be2b
+ceTaskId=f1f602d2-d80d-4167-af5e-00f921f7d731
+ceTaskUrl=http://localhost:9001/api/ce/task?id=f1f602d2-d80d-4167-af5e-00f921f7d731

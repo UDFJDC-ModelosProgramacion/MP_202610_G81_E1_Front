@@ -35,6 +35,10 @@ describe('TestLandingPage', () => {
     expect(screen.getByText('Registrar Adopción (HU28)')).toBeInTheDocument();
     expect(screen.getByText('Actualizar Convivencia (HU30)')).toBeInTheDocument();
     expect(screen.getByText('Consulta de Veterinarios (HU04)')).toBeInTheDocument();
+    expect(screen.getByText('Centro de Notificaciones (HU16-18)')).toBeInTheDocument();
+    expect(screen.getByText('Mensajería (HU19)')).toBeInTheDocument();
+    expect(screen.getByText('Gestión de Reseñas (HU20-22)')).toBeInTheDocument();
+    expect(screen.getByText('Eventos de Refugio (HU23)')).toBeInTheDocument();
   });
 
   it('renders module descriptions', () => {
@@ -53,7 +57,7 @@ describe('TestLandingPage', () => {
       </BrowserRouter>
     );
     const badges = screen.getAllByText('Disponible');
-    expect(badges.length).toBe(6);
+    expect(badges.length).toBe(10);
   });
 
   it('navigates to module path when clicked', () => {
