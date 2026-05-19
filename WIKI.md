@@ -559,34 +559,65 @@ export const PetCard = ({ name, breed, age }: PetCardProps) => {
 
 ---
 
+## Estructura del Proyecto
+
+- `/`: Home Page profesional dirigida a adoptantes.
+- `/test`: Panel de desarrollo con acceso rápido a todos los módulos funcionales (HUs).
+- `/pets`: Catálogo de mascotas disponibles.
+- `/veterinarians`: Directorio de veterinarios.
+
+---
+
 ## Pruebas
 
-### Estado Actual
+El proyecto utiliza **Vitest** y **React Testing Library** para asegurar la calidad del código. La cobertura se mide con **v8**.
 
-El proyecto aun no tiene pruebas automatizadas implementadas.
+### Cómo ejecutar los tests
 
-### Pendiente
+| Comando | Acción |
+|---------|---------|
+| `npm test` | Ejecuta los tests en modo interactivo (watch). |
+| `npm run test:coverage` | Ejecuta los tests y genera reporte en `coverage/`. |
+| `npm run sonar` | Ejecuta tests con cobertura y envía datos a SonarQube. |
 
-Se deben implementar:
+### Cómo crear un test para un Service
 
-1. **Pruebas unitarias:** Para funciones de servicios y componentes aislados.
-   - Herramientas recomendadas: **Vitest** o **Jest**.
-2. **Pruebas de componentes:** Para verificar renderizado y comportamiento.
-   - Herramienta recomendada: **React Testing Library**.
-3. **Pruebas end-to-end (E2E):** Para simular flujos completos de usuario.
-   - Herramientas recomendadas: **Cypress** o **Playwright**.
-4. **Pruebas manuales:** Crear una lista de casos de prueba y ejecutarlos manualmente.
-
-### Ejemplo de Prueba Unitaria (Futuro)
+Crea un archivo en `tests/services/nombre.test.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { getAvailablePets } from './petService';
+import { describe, it, expect, vi } from 'vitest';
+import axios from 'axios';
+import { getItems } from '../../src/services/nombreService';
 
-describe('petService', () => {
-  it('should fetch available pets', async () => {
-    const pets = await getAvailablePets();
-    expect(pets).toBeInstanceOf(Array);
+vi.mock('axios');
+
+describe('nombreService', () => {
+  it('should fetch items', async () => {
+    (axios.get as any).mockResolvedValue({ data: [{ id: 1 }] });
+    const result = await getItems();
+    expect(result).toEqual([{ id: 1 }]);
+  });
+});
+```
+
+### Cómo crear un test para un Componente
+
+Crea un archivo en `tests/features/.../Component.test.tsx`:
+
+```typescript
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { MyComponent } from '../../../../src/features/.../MyComponent';
+import { BrowserRouter } from 'react-router-dom';
+
+describe('MyComponent', () => {
+  it('should render correctly', () => {
+    render(
+      <BrowserRouter>
+        <MyComponent />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('Expected Text')).toBeInTheDocument();
   });
 });
 ```
@@ -711,12 +742,19 @@ Lista de tareas pendientes para completar el proyecto segun las directrices del 
 
 ---
 
+## Componentes Compartidos
+
+Para mantener la consistencia y reducir la duplicación (DRY), utilizamos componentes compartidos:
+
+- **`FormPageLayout`**: Estructura estándar para páginas de formulario (título, descripción y contenedor).
+- **`StatusDialogs`**: Manejo centralizado de diálogos de éxito y error tras enviar formularios.
+
+Ubicación: `src/components/shared/`
+
+---
+
 ## Notas Finales
 
-Este proyecto es una base modular y escalable. Cada integrante del equipo puede trabajar en su Historia de Usuario de manera independiente siguiendo la estructura de carpetas establecida. Recuerda siempre hacer commits descriptivos y mantener el codigo limpio y organizado.
+Este proyecto es una base modular y escalable. Recuerda siempre hacer commits cortos (estilo conventional commits), mantener el código limpio y seguir los estándares de calidad definidos en SonarQube.
 
-Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
-er el codigo limpio y organizado.
-
-Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
- repositorio o contactar al lider del equipo.
+Para dudas o sugerencias, abrir un issue en el repositorio o contactar al líder del equipo.

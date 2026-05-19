@@ -2,7 +2,7 @@ interface SidebarProps {
   onFilterChange: (filters: { species?: string; size?: string }) => void;
 }
 
-export function Sidebar({ onFilterChange }: SidebarProps) {
+export function Sidebar({ onFilterChange }: Readonly<SidebarProps>) {
   
   const handleSpeciesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const species = e.target.value;

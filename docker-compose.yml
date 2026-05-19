@@ -8,5 +8,5 @@ services:
     container_name: pet-web-ui
     ports:
       - "3000:80"
-    restart: always
+    restart: no # me di cuenta que esto consume harta memoria y siempre se va a iniciar cuando se prenda la PC, mantener en no
     # El backend no se incluye, muchachos ustedes tienen que correr el back desde otra terminal :) 

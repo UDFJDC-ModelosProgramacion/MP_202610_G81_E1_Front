@@ -18,6 +18,20 @@ Para ejecutar este proyecto, es necesario tener instalado:
 2. **Docker Engine y Docker Compose** (Si usas Linux).
 3. **Git** para clonar el repositorio.
 
+## Ejecución de Tests
+
+Para ejecutar los tests del proyecto, utiliza:
+
+```bash
+npm run test
+```
+
+Para ejecutar los tests con generación de reporte de cobertura:
+
+```bash
+npm run test -- --coverage
+```
+
 ## Estructura del proyecto
 
 * **src/components**: Componentes visuales reutilizables.
