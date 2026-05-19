@@ -32,7 +32,7 @@ export function AdopterRegistrationForm() {
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorDialogMessage, setErrorDialogMessage] = useState<string | null>(null);
 
-  const isEmailValid = formData.email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.email);
+  const isEmailValid = formData.email.length > 0 && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email);
   const isPhoneValid = formData.phone.length >= 7;
   const isPasswordValid = formData.password.length >= 6;
 
