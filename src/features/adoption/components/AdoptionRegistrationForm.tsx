@@ -39,7 +39,7 @@ export function AdoptionRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setTouched({ adoptionDate: true, adopterId: true, petId: true });
 

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { CalendarPlus } from 'lucide-react';
 import { createShelterEvent } from '../../../services/shelterEventService';
 import { FormPageLayout } from '../../../components/shared/FormPageLayout';
@@ -44,7 +44,7 @@ export function ShelterEventRegistrationForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setTouched({ name: true, eventDate: true, shelterId: true });
 
@@ -164,7 +164,7 @@ export function ShelterEventRegistrationForm() {
         <div className="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
           <button
             type="button"
-            onClick={() => window.history.back()}
+            onClick={() => globalThis.history.back()}
             className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
           >
             Cancel
@@ -182,7 +182,7 @@ export function ShelterEventRegistrationForm() {
 
       <StatusDialogs
         showSuccess={showSuccessDialog}
-        onSuccessClose={() => { setShowSuccessDialog(false); window.history.back(); }}
+        onSuccessClose={() => { setShowSuccessDialog(false); globalThis.history.back(); }}
         successTitle="Event Registered Successfully!"
         successDescription="The shelter event has been registered and is now visible to all users on the platform."
         showError={showErrorDialog}
