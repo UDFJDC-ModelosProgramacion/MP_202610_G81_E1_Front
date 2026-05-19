@@ -14,6 +14,17 @@ import { AdoptionRegistrationPage } from './pages/AdoptionRegistrationPage';
 // HU30 — Actualizar Resultado de Convivencia
 import { TrialCohabitationUpdatePage } from './pages/TrialCohabitationUpdatePage';
 
+// HU16 / HU17 / HU18 — Ver, Marcar y Eliminar Notificaciones
+import { NotificationsPage } from './pages/NotificationsPage';
+
+// HU19 — Enviar Mensaje
+import { SendMessagePage } from './pages/SendMessagePage';
+
+// HU20 / HU21 / HU22 — Crear, Ver y Eliminar Reseñas
+import { ReviewsListPage } from './pages/ReviewsListPage';
+
+// HU23 — Registrar Evento de Refugio
+import { ShelterEventRegistrationPage } from './pages/ShelterEventRegistrationPage';
 // HUxx — Consulta de Veterinarios
 import { VeterinarianDirectoryPage } from './pages/VeterinarianDirectoryPage';
 
@@ -42,6 +53,17 @@ function App() {
         {/* HU30 — Actualizar Resultado de Convivencia de Prueba */}
         <Route path="/update-trial-cohabitation" element={<TrialCohabitationUpdatePage />} />
 
+        {/* HU16 / HU17 / HU18 — Notificaciones */}
+        <Route path="/notifications" element={<NotificationsPage />} />
+
+        {/* HU19 — Enviar Mensaje */}
+        <Route path="/send-message" element={<SendMessagePage />} />
+
+        {/* HU20 / HU21 / HU22 — Reseñas */}
+        <Route path="/reviews" element={<ReviewsListPage />} />
+
+        {/* HU23 — Registrar Evento de Refugio */}
+        <Route path="/register-shelter-event" element={<ShelterEventRegistrationPage />} />
         {/* HUxx — Consulta de Veterinarios */}
         <Route path="/veterinarians" element={<VeterinarianDirectoryPage />} />
 
