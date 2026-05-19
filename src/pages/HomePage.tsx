@@ -84,7 +84,7 @@ export function HomePage() {
                 {/* Main Heading */}
                 <div className="space-y-4">
                   <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
-                    Find Your
+                    Find Your{' '}
                     <span className="block bg-gradient-to-r from-blue-400 via-teal-400 to-green-400 text-transparent bg-clip-text">Perfect Match</span>
                   </h1>
                   <p className="text-xl md:text-2xl text-blue-100/80 leading-relaxed max-w-lg">
@@ -122,8 +122,8 @@ export function HomePage() {
                     </div>
                     <div className="text-sm">
                       <div className="flex gap-0.5 mb-1">
-                        {[...new Array(5)].map((_, i) => (
-                          <Star key={`hero-star-${i}`} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                        {['star-1', 'star-2', 'star-3', 'star-4', 'star-5'].map((starId) => (
+                          <Star key={starId} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
                         ))}
                       </div>
                       <p className="text-blue-200/70 text-xs">4.9/5 from 2,000+ reviews</p>
@@ -345,7 +345,9 @@ export function HomePage() {
               ].map((story) => (
                 <div key={story.name} className="bg-gray-50 rounded-xl p-8 border border-gray-200">
                   <div className="flex gap-1 mb-4">
-                    {[...new Array(5)].map((_, j) => <Star key={`${story.name}-star-${j}`} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
+                    {['s1', 's2', 's3', 's4', 's5'].map((starId) => (
+                      <Star key={`${story.name}-${starId}`} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
                   </div>
                   <p className="text-gray-700 mb-6 leading-relaxed">{story.text}</p>
                   <div className="flex items-center gap-3">

@@ -742,41 +742,19 @@ Lista de tareas pendientes para completar el proyecto segun las directrices del 
 
 ---
 
+## Componentes Compartidos
+
+Para mantener la consistencia y reducir la duplicación (DRY), utilizamos componentes compartidos:
+
+- **`FormPageLayout`**: Estructura estándar para páginas de formulario (título, descripción y contenedor).
+- **`StatusDialogs`**: Manejo centralizado de diálogos de éxito y error tras enviar formularios.
+
+Ubicación: `src/components/shared/`
+
+---
+
 ## Notas Finales
 
-Este proyecto es una base modular y escalable. Cada integrante del equipo puede trabajar en su Historia de Usuario de manera independiente siguiendo la estructura de carpetas establecida. Recuerda siempre hacer commits descriptivos y mantener el codigo limpio y organizado.
+Este proyecto es una base modular y escalable. Recuerda siempre hacer commits cortos (estilo conventional commits), mantener el código limpio y seguir los estándares de calidad definidos en SonarQube.
 
-Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
-er el codigo limpio y organizado.
-
-Para dudas o sugerencias, abrir un issue en el repositorio o contactar al lider del equipo.
- repositorio o contactar al lider del equipo.
-
-# Estrategia de Testing
-
-Para mantener la salud del proyecto, todos los nuevos servicios y componentes deben contar con pruebas unitarias o de integración.
-
-## Cómo crear un test para un Service
-
-Para crear un test de un servicio, sigue estos pasos:
-
-1. Crea un archivo en `tests/services/` con el sufijo `.test.ts` (ej. `tests/services/veterinarianService.test.ts`).
-2. Utiliza `vitest` y mockea `axios`.
-3. Asegúrate de cubrir los casos de éxito y manejo de errores.
-
-### Ejemplo:
-```typescript
-import { describe, it, expect, vi } from 'vitest';
-import axios from 'axios';
-import { getVeterinarians } from '../src/services/veterinarianService';
-
-vi.mock('axios');
-
-describe('veterinarianService', () => {
-  it('should fetch data correctly', async () => {
-    vi.mocked(axios.get).mockResolvedValue({ data: [] });
-    const result = await getVeterinarians();
-    expect(result).toEqual([]);
-  });
-});
-```
+Para dudas o sugerencias, abrir un issue en el repositorio o contactar al líder del equipo.
