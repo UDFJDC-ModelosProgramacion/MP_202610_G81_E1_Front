@@ -34,7 +34,7 @@ describe('TestLandingPage', () => {
     expect(screen.getByText('Registro de Adoptante (HU24)')).toBeInTheDocument();
     expect(screen.getByText('Registrar Adopción (HU28)')).toBeInTheDocument();
     expect(screen.getByText('Actualizar Convivencia (HU30)')).toBeInTheDocument();
-    expect(screen.getByText('Consulta de Veterinarios')).toBeInTheDocument();
+    expect(screen.getByText('Consulta de Veterinarios (HU04)')).toBeInTheDocument();
   });
 
   it('renders module descriptions', () => {

@@ -49,7 +49,7 @@ export const TestLandingPage = () => {
     },
     {
       id: 'HU-VETS',
-      title: 'Consulta de Veterinarios',
+      title: 'Consulta de Veterinarios (HU04)',
       description: 'Busca veterinarios disponibles para asegurar el bienestar de tu mascota.',
       icon: <Stethoscope className="w-12 h-12 text-blue-600" />,
       active: true,

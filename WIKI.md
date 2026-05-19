@@ -559,6 +559,15 @@ export const PetCard = ({ name, breed, age }: PetCardProps) => {
 
 ---
 
+## Estructura del Proyecto
+
+- `/`: Home Page profesional dirigida a adoptantes.
+- `/test`: Panel de desarrollo con acceso rápido a todos los módulos funcionales (HUs).
+- `/pets`: Catálogo de mascotas disponibles.
+- `/veterinarians`: Directorio de veterinarios.
+
+---
+
 ## Pruebas
 
 El proyecto utiliza **Vitest** y **React Testing Library** para asegurar la calidad del código. La cobertura se mide con **v8**.

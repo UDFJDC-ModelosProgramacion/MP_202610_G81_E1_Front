@@ -85,9 +85,7 @@ export function HomePage() {
                 <div className="space-y-4">
                   <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
                     Find Your
-                    <span className="block bg-gradient-to-r from-blue-400 via-teal-400 to-green-400 text-transparent bg-clip-text">
-                      Perfect Match
-                    </span>
+                    <span className="block bg-gradient-to-r from-blue-400 via-teal-400 to-green-400 text-transparent bg-clip-text">Perfect Match</span>
                   </h1>
                   <p className="text-xl md:text-2xl text-blue-100/80 leading-relaxed max-w-lg">
                     Connect with loving pets waiting for their forever home. Start your adoption journey today.
@@ -124,8 +122,8 @@ export function HomePage() {
                     </div>
                     <div className="text-sm">
                       <div className="flex gap-0.5 mb-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                        {[...new Array(5)].map((_, i) => (
+                          <Star key={`hero-star-${i}`} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
                         ))}
                       </div>
                       <p className="text-blue-200/70 text-xs">4.9/5 from 2,000+ reviews</p>
@@ -344,10 +342,10 @@ export function HomePage() {
                 { name: 'Sarah Mitchell', initials: 'SM', color: 'bg-blue-200 text-blue-700', text: '"Finding Max through PetMatch was the best decision we ever made. The process was smooth, and the shelter was incredibly supportive."' },
                 { name: 'James Chen', initials: 'JC', color: 'bg-green-200 text-green-700', text: '"The team at PetMatch helped us find Luna, our perfect cat. The verification process gave us confidence, and the support has been amazing."' },
                 { name: 'Emily Rodriguez', initials: 'ER', color: 'bg-purple-200 text-purple-700', text: '"As a first-time pet owner, I was nervous, but PetMatch made everything easy. Now I can\'t imagine life without Bella!"' }
-              ].map((story, i) => (
-                <div key={i} className="bg-gray-50 rounded-xl p-8 border border-gray-200">
+              ].map((story) => (
+                <div key={story.name} className="bg-gray-50 rounded-xl p-8 border border-gray-200">
                   <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, j) => <Star key={j} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
+                    {[...new Array(5)].map((_, j) => <Star key={`${story.name}-star-${j}`} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
                   </div>
                   <p className="text-gray-700 mb-6 leading-relaxed">{story.text}</p>
                   <div className="flex items-center gap-3">
