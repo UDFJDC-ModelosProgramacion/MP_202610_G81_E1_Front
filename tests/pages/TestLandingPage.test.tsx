@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { LandingPage } from '../../src/pages/LandingPage';
+import { TestLandingPage } from '../../src/pages/TestLandingPage';
 import { BrowserRouter } from 'react-router-dom';
 
 const mockNavigate = vi.fn();
@@ -13,20 +13,20 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-describe('LandingPage', () => {
+describe('TestLandingPage', () => {
   it('renders page title', () => {
     render(
       <BrowserRouter>
-        <LandingPage />
+        <TestLandingPage />
       </BrowserRouter>
     );
-    expect(screen.getByText('Pet Adoption System')).toBeInTheDocument();
+    expect(screen.getByText('Developer Test Environment')).toBeInTheDocument();
   });
 
   it('renders all module cards', () => {
     render(
       <BrowserRouter>
-        <LandingPage />
+        <TestLandingPage />
       </BrowserRouter>
     );
     expect(screen.getByText('Módulo de Mascotas (HU01)')).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('LandingPage', () => {
   it('renders module descriptions', () => {
     render(
       <BrowserRouter>
-        <LandingPage />
+        <TestLandingPage />
       </BrowserRouter>
     );
     expect(screen.getByText(/Gestión y visualización de mascotas/)).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('LandingPage', () => {
   it('renders Disponible badges for active modules', () => {
     render(
       <BrowserRouter>
-        <LandingPage />
+        <TestLandingPage />
       </BrowserRouter>
     );
     const badges = screen.getAllByText('Disponible');
@@ -59,7 +59,7 @@ describe('LandingPage', () => {
   it('navigates to module path when clicked', () => {
     render(
       <BrowserRouter>
-        <LandingPage />
+        <TestLandingPage />
       </BrowserRouter>
     );
     const petModule = screen.getByText('Módulo de Mascotas (HU01)');

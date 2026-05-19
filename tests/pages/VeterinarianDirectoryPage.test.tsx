@@ -14,7 +14,7 @@ describe('VeterinarianDirectoryPage', () => {
         <VeterinarianDirectoryPage />
       </BrowserRouter>
     );
-    expect(screen.getByText('PetMatch')).toBeInTheDocument();
+    expect(screen.getAllByText('PetMatch')[0]).toBeInTheDocument();
     expect(screen.getByText(/2026 PetMatch/)).toBeInTheDocument();
   });
 

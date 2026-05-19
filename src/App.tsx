@@ -1,7 +1,8 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PetHomePage } from './pages/PetHomePage';
-import { LandingPage } from './pages/LandingPage';
+import { HomePage } from './pages/HomePage';
+import { TestLandingPage } from './pages/TestLandingPage';
 import { ShelterRegistrationPage } from './pages/ShelterRegistrationPage';
 
 // HU24 — Registro de Adoptante
@@ -20,8 +21,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Página de inicio con los módulos */}
-        <Route path="/" element={<LandingPage />} />
+        {/* Nueva Página de inicio profesional */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Página de desarrollo con los módulos (antigua LandingPage) */}
+        <Route path="/test" element={<TestLandingPage />} />
 
         {/* HU01 — Inventario de mascotas */}
         <Route path="/pets" element={<PetHomePage />} />

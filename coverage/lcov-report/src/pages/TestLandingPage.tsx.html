@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/pages/LandingPage.tsx</title>
+    <title>Code coverage report for src/pages/TestLandingPage.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/pages</a> LandingPage.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/pages</a> TestLandingPage.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -156,16 +156,21 @@
 <a name='L91'></a><a href='#L91'>91</a>
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -214,7 +219,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,7 +232,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -249,11 +258,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-import { useNavigate } from 'react-router-dom';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useNavigate } from 'react-router-dom';
 import { PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope } from 'lucide-react';
+import { Header } from '../components/layout/Header';
+import { Footer } from '../components/layout/Footer';
 &nbsp;
-export const LandingPage = () =&gt; {
+export const TestLandingPage = () =&gt; {
   const navigate = useNavigate();
 &nbsp;
   const modules = [
@@ -308,48 +321,53 @@ export const LandingPage = () =&gt; {
   ];
 &nbsp;
   return (
-    &lt;div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6"&gt;
-      &lt;header className="mb-12 text-center"&gt;
-        &lt;h1 className="text-4xl font-bold text-neutral-800 mb-4"&gt;Pet Adoption System&lt;/h1&gt;
-        &lt;p className="text-neutral-600 italic"&gt;
-          Home en desarrollo - Seleccione un módulo funcional
-        &lt;/p&gt;
-      &lt;/header&gt;
+    &lt;div className="min-h-screen bg-gray-50 flex flex-col"&gt;
+      &lt;Header /&gt;
+      &lt;main className="flex-1 flex flex-col items-center justify-center p-6 py-12"&gt;
+        &lt;header className="mb-12 text-center"&gt;
+          &lt;h1 className="text-4xl font-bold text-neutral-800 mb-4"&gt;Developer Test Environment&lt;/h1&gt;
+          &lt;p className="text-neutral-600 italic"&gt;
+            Módulos funcionales disponibles para pruebas internas
+          &lt;/p&gt;
+        &lt;/header&gt;
 &nbsp;
-      &lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full"&gt;
-        {modules.map((module) =&gt; (
-          &lt;button
-            key={module.id}
-            onClick={() =&gt; module.active &amp;&amp; navigate(module.path)}
-            disabled={!module.active}
-            className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
-              ${
-                module.active
-                  ? 'border-orange-200 hover:border-orange-500 cursor-pointer hover:shadow-lg'
-                  : <span class="branch-1 cbranch-no" title="branch not covered" >'border-gray-100 opacity-60 grayscale cursor-not-allowed'</span>
-              }`}
-          &gt;
-            &lt;div className="mb-4"&gt;{module.icon}&lt;/div&gt;
-            &lt;h2 className="text-xl font-bold mb-2 text-neutral-800"&gt;{module.title}&lt;/h2&gt;
-            &lt;p className="text-sm text-neutral-500"&gt;{module.description}&lt;/p&gt;
-            {module.active &amp;&amp; (
-              &lt;span className="mt-4 px-4 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider"&gt;
-                Disponible
-              &lt;/span&gt;
-            )}
-          &lt;/button&gt;
-        ))}
-      &lt;/div&gt;
+        &lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full"&gt;
+          {modules.map((module) =&gt; (
+            &lt;button
+              key={module.id}
+              onClick={() =&gt; module.active &amp;&amp; navigate(module.path)}
+              disabled={!module.active}
+              className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
+                ${
+                  module.active
+                    ? 'border-orange-200 hover:border-orange-500 cursor-pointer hover:shadow-lg'
+                    : <span class="branch-1 cbranch-no" title="branch not covered" >'border-gray-100 opacity-60 grayscale cursor-not-allowed'</span>
+                }`}
+            &gt;
+              &lt;div className="mb-4"&gt;{module.icon}&lt;/div&gt;
+              &lt;h2 className="text-xl font-bold mb-2 text-neutral-800"&gt;{module.title}&lt;/h2&gt;
+              &lt;p className="text-sm text-neutral-500"&gt;{module.description}&lt;/p&gt;
+              {module.active &amp;&amp; (
+                &lt;span className="mt-4 px-4 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider"&gt;
+                  Disponible
+                &lt;/span&gt;
+              )}
+            &lt;/button&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/main&gt;
+      &lt;Footer /&gt;
     &lt;/div&gt;
   );
-};</pre></td></tr></table></pre>
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-19T00:28:25.392Z
+                at 2026-05-19T00:55:06.032Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

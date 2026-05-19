@@ -1,8 +1,9 @@
-
 import { useNavigate } from 'react-router-dom';
 import { PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope } from 'lucide-react';
+import { Header } from '../components/layout/Header';
+import { Footer } from '../components/layout/Footer';
 
-export const LandingPage = () => {
+export const TestLandingPage = () => {
   const navigate = useNavigate();
 
   const modules = [
@@ -57,38 +58,42 @@ export const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-neutral-800 mb-4">Pet Adoption System</h1>
-        <p className="text-neutral-600 italic">
-          Home en desarrollo - Seleccione un módulo funcional
-        </p>
-      </header>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <main className="flex-1 flex flex-col items-center justify-center p-6 py-12">
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl font-bold text-neutral-800 mb-4">Developer Test Environment</h1>
+          <p className="text-neutral-600 italic">
+            Módulos funcionales disponibles para pruebas internas
+          </p>
+        </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full">
-        {modules.map((module) => (
-          <button
-            key={module.id}
-            onClick={() => module.active && navigate(module.path)}
-            disabled={!module.active}
-            className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
-              ${
-                module.active
-                  ? 'border-orange-200 hover:border-orange-500 cursor-pointer hover:shadow-lg'
-                  : 'border-gray-100 opacity-60 grayscale cursor-not-allowed'
-              }`}
-          >
-            <div className="mb-4">{module.icon}</div>
-            <h2 className="text-xl font-bold mb-2 text-neutral-800">{module.title}</h2>
-            <p className="text-sm text-neutral-500">{module.description}</p>
-            {module.active && (
-              <span className="mt-4 px-4 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider">
-                Disponible
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full">
+          {modules.map((module) => (
+            <button
+              key={module.id}
+              onClick={() => module.active && navigate(module.path)}
+              disabled={!module.active}
+              className={`p-8 bg-white rounded-2xl shadow-sm border-2 transition-all duration-300 flex flex-col items-center text-center
+                ${
+                  module.active
+                    ? 'border-orange-200 hover:border-orange-500 cursor-pointer hover:shadow-lg'
+                    : 'border-gray-100 opacity-60 grayscale cursor-not-allowed'
+                }`}
+            >
+              <div className="mb-4">{module.icon}</div>
+              <h2 className="text-xl font-bold mb-2 text-neutral-800">{module.title}</h2>
+              <p className="text-sm text-neutral-500">{module.description}</p>
+              {module.active && (
+                <span className="mt-4 px-4 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider">
+                  Disponible
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
