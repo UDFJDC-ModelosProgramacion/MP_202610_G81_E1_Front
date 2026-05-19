@@ -91,6 +91,7 @@ export const ShelterRegistrationPage = () => {
       setTouched({ name: false, city: false, email: false });
     } catch (err) {
       setSubmissionStatus('error');
+      console.error('Failed to register shelter:', err);
       setErrorDialogMessage('Failed to register shelter. Please try again.');
       setShowErrorDialog(true);
     } finally {

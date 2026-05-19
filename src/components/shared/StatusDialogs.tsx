@@ -28,7 +28,7 @@ export function StatusDialogs({
   onErrorClose,
   errorTitle = 'Registration Error',
   errorMessage,
-}: StatusDialogsProps) {
+}: Readonly<StatusDialogsProps>) {
   return (
     <>
       {/* Dialog de Éxito */}
