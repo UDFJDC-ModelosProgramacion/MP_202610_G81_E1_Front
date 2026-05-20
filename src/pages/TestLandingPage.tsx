@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { 
   PawPrint, Lock, Users, Heart, ClipboardList, Stethoscope, 
-  Bell, MessageSquare, Star, Calendar 
+  Bell, MessageSquare, Star, Calendar, FileText
 } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
@@ -89,6 +89,38 @@ export const TestLandingPage = () => {
       icon: <Calendar className="w-12 h-12 text-pink-500" />,
       active: true,
       path: '/register-shelter-event',
+    },
+    {
+      id: 'HU07-10-14',
+      title: 'Catálogo y Control de Vacunas (HU07, HU10, HU14)',
+      description: 'Gestión del catálogo, registro de aplicaciones y eliminación de vacunas (HU14).',
+      icon: <ClipboardList className="w-12 h-12 text-teal-500" />,
+      active: true,
+      path: '/vaccines',
+    },
+    {
+      id: 'HU08-11-15',
+      title: 'Historias Clínicas e Historial (HU08, HU11, HU15)',
+      description: 'Apertura de HC, consulta cronológica de eventos y eliminación de reportes (HU15).',
+      icon: <FileText className="w-12 h-12 text-rose-500" />,
+      active: true,
+      path: '/clinical/consult',
+    },
+    {
+      id: 'HU09-12',
+      title: 'Eventos Médicos (HU09, HU12)',
+      description: 'Registrar nuevas consultas sanitarias y modificar diagnósticos existentes.',
+      icon: <Calendar className="w-12 h-12 text-emerald-500" />,
+      active: true,
+      path: '/events/register',
+    },
+    {
+      id: 'HU13',
+      title: 'Administración Crítica (HU13)',
+      description: 'Panel de control para la eliminación física completa de registros creados por error masivo.',
+      icon: <Lock className="w-12 h-12 text-red-600" />,
+      active: true,
+      path: '/admin/delete',
     },
   ];
 

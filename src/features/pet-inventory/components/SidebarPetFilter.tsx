@@ -15,7 +15,7 @@ export function Sidebar({ onFilterChange }: Readonly<SidebarProps>) {
   };
 
   return (
-    <aside className="w-72 bg-white border-r border-neutral-200 p-6 flex-shrink-0">
+    <aside className="w-72 bg-white border-r border-neutral-200 p-6 shrink-0">
       <h2 className="font-semibold text-lg text-neutral-800 mb-6">Filters</h2>
 
       <div className="space-y-8">

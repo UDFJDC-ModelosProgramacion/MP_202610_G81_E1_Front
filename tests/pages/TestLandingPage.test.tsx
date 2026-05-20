@@ -39,6 +39,11 @@ describe('TestLandingPage', () => {
     expect(screen.getByText('Mensajería (HU19)')).toBeInTheDocument();
     expect(screen.getByText('Gestión de Reseñas (HU20-22)')).toBeInTheDocument();
     expect(screen.getByText('Eventos de Refugio (HU23)')).toBeInTheDocument();
+    expect(screen.getByText('Catálogo y Control de Vacunas (HU07, HU10, HU14)')).toBeInTheDocument();
+    expect(screen.getByText('Historias Clínicas e Historial (HU08, HU11, HU15)')).toBeInTheDocument();
+    expect(screen.getByText('Eventos Médicos (HU09, HU12)')).toBeInTheDocument();
+    expect(screen.getByText('Administración Crítica (HU13)')).toBeInTheDocument();
+
   });
 
   it('renders module descriptions', () => {
@@ -57,7 +62,7 @@ describe('TestLandingPage', () => {
       </BrowserRouter>
     );
     const badges = screen.getAllByText('Disponible');
-    expect(badges.length).toBe(10);
+    expect(badges.length).toBe(14);
   });
 
   it('navigates to module path when clicked', () => {
