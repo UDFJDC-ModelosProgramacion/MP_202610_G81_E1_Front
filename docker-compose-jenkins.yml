@@ -1,0 +1,22 @@
+version: '3.8'
+
+networks:
+  front-cicd-net:
+    driver: bridge
+
+volumes:
+  jenkins_front_data:
+
+services:
+  jenkins-front:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: jenkins-front-automation
+    restart: "no" 
+    ports:
+      - "8081:8080"   
+      - "50001:50000" 
+    volumes:
+      - jenkins_front_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - front-cicd-net

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import { sendMessage } from '../../../services/messageService';
 import { FormPageLayout } from '../../../components/shared/FormPageLayout';
@@ -41,7 +41,7 @@ export function SendMessageForm() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setTouched({ content: true, sendDate: true, senderId: true, receiverId: true });
 
@@ -173,7 +173,7 @@ export function SendMessageForm() {
         <div className="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
           <button
             type="button"
-            onClick={() => window.history.back()}
+            onClick={() => globalThis.history.back()}
             className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
           >
             Cancel
@@ -191,7 +191,7 @@ export function SendMessageForm() {
 
       <StatusDialogs
         showSuccess={showSuccessDialog}
-        onSuccessClose={() => { setShowSuccessDialog(false); window.history.back(); }}
+        onSuccessClose={() => { setShowSuccessDialog(false); globalThis.history.back(); }}
         successTitle="Message Sent Successfully!"
         successDescription="Your message has been delivered and is now available to the recipient."
         showError={showErrorDialog}

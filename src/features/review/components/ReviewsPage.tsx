@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Star, Trash2, PlusCircle, Search } from 'lucide-react';
 import { createReview, getAllReviews, deleteReview } from '../../../services/reviewService';
 import { type ReviewDTO } from '../../../types/review';
@@ -71,7 +71,7 @@ export function ReviewsPage() {
     }
   };
 
-  const handleFilterSearch = (e: FormEvent) => {
+  const handleFilterSearch = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     fetchReviews();
   };

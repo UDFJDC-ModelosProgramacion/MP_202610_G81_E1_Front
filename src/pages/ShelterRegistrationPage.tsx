@@ -74,7 +74,7 @@ export const ShelterRegistrationPage = () => {
     if (id === 'email') setEmailExistsError(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent) =>  {
     e.preventDefault();
     if (nameExistsError || emailExistsError) return;
     if (!formData.name || !formData.city || !isEmailValid) {

@@ -56,7 +56,7 @@ export function TrialCohabitationUpdateForm() {
     if (e.key === 'Enter') handleSearch();
   };
  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!trialData?.id) return;
  
