@@ -18,7 +18,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
 
   // 2. Otherwise, attempt backend authentication
   try {
-    const response = await axios.post<AuthResponse>(`${BASE_URL}/login`, {
+    const response = await axios.post<AuthResponse>(`${BASE_URL}/auth/login`, {
       email,
       password
     });
