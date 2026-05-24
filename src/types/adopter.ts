@@ -1,3 +1,5 @@
+import type { UserRole } from './auth';
+
 export interface AdopterDTO {
   id?: number;
   name: string;
@@ -7,6 +9,7 @@ export interface AdopterDTO {
   housingType: string;
   hasChildren: boolean;
   hasOtherPets: boolean;
+  role?: UserRole;
 }
  
 export interface AdopterDetailDTO extends AdopterDTO {

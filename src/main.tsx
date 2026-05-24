@@ -4,6 +4,14 @@ import './styles/index.css'
 import App from './App.tsx'
 
 const rootElement = document.getElementById('root');
+if (import.meta.env.DEV) {
+  import('./mocks/browser')
+    .then(({ worker }) => {
+      worker.start();
+    })
+    .catch(() => {});
+}
+
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>

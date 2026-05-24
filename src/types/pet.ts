@@ -1,11 +1,21 @@
 export interface PetDTO {
-  id: number;
+  id?: number;
   name: string;
-  breed: string;
-  age: number;
-  photos: string; 
-  status: string;
   species: string;
+  breed: string;
+  sex: string;
+  size: string;
+  age?: number;
+  description?: string;
+  photos?: string;
+  status?: string;
+  temperament?: string;
+  specialNeeds?: string;
+  activityLevel?: string;
+  origin?: string;
+  goodWithKids?: boolean;
+  goodWithPets?: boolean;
+  spaceRequired?: string;
   shelter?: {
     name: string | null;
   };

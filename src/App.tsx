@@ -4,6 +4,11 @@ import { PetHomePage } from './pages/PetHomePage';
 import { HomePage } from './pages/HomePage';
 import { TestLandingPage } from './pages/TestLandingPage';
 import { ShelterRegistrationPage } from './pages/ShelterRegistrationPage';
+import DeleteRecord from './features/admin/DeleteRecord'
+import { VaccinePage } from './pages/VaccinePage';
+import { MedicalHistoryPage } from './pages/MedicalHistoryPage';
+import { MedicalEventPage } from './pages/MedicalEventPage';
+import { VaccinationRecordPage } from './pages/VaccinationRecordPage';
 
 // HU24 — Registro de Adoptante
 import { AdopterRegistrationPage } from './pages/AdopterRegistrationPage';
@@ -27,51 +32,50 @@ import { ReviewsListPage } from './pages/ReviewsListPage';
 import { ShelterEventRegistrationPage } from './pages/ShelterEventRegistrationPage';
 // HUxx — Consulta de Veterinarios
 import { VeterinarianDirectoryPage } from './pages/VeterinarianDirectoryPage';
+import { VeterinarianRegistrationPage } from './pages/VeterinarianRegistrationPage';
+import { PetRegistrationPage } from './pages/PetRegistrationPage';
+import { LoginPage } from './pages/LoginPage';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/shared/ProtectedRoute';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Nueva Página de inicio profesional */}
-        <Route path="/" element={<HomePage />} />
-        
-        {/* Página de desarrollo con los módulos (antigua LandingPage) */}
-        <Route path="/test" element={<TestLandingPage />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* HU01 — Inventario de mascotas */}
-        <Route path="/pets" element={<PetHomePage />} />
+          {/* Veterinarian & Admin Routes */}
+          <Route path="/vaccines" element={<ProtectedRoute allowedRoles={['VETERINARIAN', 'ADMIN']}><VaccinePage /></ProtectedRoute>} />
+          <Route path="/medical-histories" element={<ProtectedRoute allowedRoles={['VETERINARIAN', 'ADMIN']}><MedicalHistoryPage /></ProtectedRoute>} />
+          <Route path="/medical-events" element={<ProtectedRoute allowedRoles={['VETERINARIAN', 'ADMIN']}><MedicalEventPage /></ProtectedRoute>} />
+          <Route path="/vaccination-records" element={<ProtectedRoute allowedRoles={['VETERINARIAN', 'ADMIN']}><VaccinationRecordPage /></ProtectedRoute>} />
 
-        {/* HU03 — Registro de Refugios */}
-        <Route path="/register-shelter" element={<ShelterRegistrationPage />} />
+          {/* Admin Routes */}
+          <Route path="/admin/delete" element={<ProtectedRoute allowedRoles={['ADMIN']}><DeleteRecord /></ProtectedRoute>} />
+          <Route path="/register-shelter-event" element={<ProtectedRoute allowedRoles={['ADMIN']}><ShelterEventRegistrationPage /></ProtectedRoute>} />
+          <Route path="/test" element={<ProtectedRoute allowedRoles={['ADMIN']}><TestLandingPage /></ProtectedRoute>} />
 
-        {/* HU24 — Registro de Adoptante */}
-        <Route path="/register-adopter" element={<AdopterRegistrationPage />} />
+          {/* Authenticated User Routes (Adopter, Vet, Admin) */}
+          <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+          <Route path="/send-message" element={<ProtectedRoute><SendMessagePage /></ProtectedRoute>} />
+          <Route path="/reviews" element={<ProtectedRoute><ReviewsListPage /></ProtectedRoute>} />
+          <Route path="/update-trial-cohabitation" element={<ProtectedRoute><TrialCohabitationUpdatePage /></ProtectedRoute>} />
 
-        {/* HU28 — Registro de Adopción Formal */}
-        <Route path="/register-adoption" element={<AdoptionRegistrationPage />} />
-
-        {/* HU30 — Actualizar Resultado de Convivencia de Prueba */}
-        <Route path="/update-trial-cohabitation" element={<TrialCohabitationUpdatePage />} />
-
-        {/* HU16 / HU17 / HU18 — Notificaciones */}
-        <Route path="/notifications" element={<NotificationsPage />} />
-
-        {/* HU19 — Enviar Mensaje */}
-        <Route path="/send-message" element={<SendMessagePage />} />
-
-        {/* HU20 / HU21 / HU22 — Reseñas */}
-        <Route path="/reviews" element={<ReviewsListPage />} />
-
-        {/* HU23 — Registrar Evento de Refugio */}
-        <Route path="/register-shelter-event" element={<ShelterEventRegistrationPage />} />
-        {/* HUxx — Consulta de Veterinarios */}
-        <Route path="/veterinarians" element={<VeterinarianDirectoryPage />} />
-
-        {/* Ruta 404 */}
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/pets" element={<PetHomePage />} />
+          <Route path="/register-shelter" element={<ShelterRegistrationPage />} />
+          <Route path="/register-adopter" element={<AdopterRegistrationPage />} />
+          <Route path="/register-adoption" element={<AdoptionRegistrationPage />} />
+          <Route path="/veterinarians" element={<VeterinarianDirectoryPage />} />
+          <Route path="/register-veterinarian" element={<VeterinarianRegistrationPage />} />
+          <Route path="/register-pet" element={<PetRegistrationPage />} />
+          {/* Ruta 404 */}
         <Route path="*" element={<div className="p-10">404 - Not Found</div>} />
       </Routes>
     </Router>
-  );
-}
-
+    </AuthProvider>
+    );
+    }
 export default App;

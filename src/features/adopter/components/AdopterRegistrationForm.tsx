@@ -1,12 +1,15 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
+import axios from 'axios';
 import { FormError } from '../../../components/shared/FormError';
 import { registerAdopter } from '../../../services/adopterService';
 import { FormPageLayout } from '../../../components/shared/FormPageLayout';
 import { StatusDialogs } from '../../../components/shared/StatusDialogs';
 
 export function AdopterRegistrationForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -104,6 +107,7 @@ export function AdopterRegistrationForm() {
         housingType: formData.housingType,
         hasChildren: formData.hasChildren === 'true',
         hasOtherPets: formData.hasOtherPets === 'true',
+        role: 'ADOPTER',
       });
 
       setSubmissionStatus('success');
@@ -111,7 +115,10 @@ export function AdopterRegistrationForm() {
       resetForm();
     } catch (err) {
       setSubmissionStatus('error');
-      const message = err?.response?.data?.message || 'Failed to register adopter. Please try again.';
+      let message = 'Failed to register adopter. Please try again.';
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        message = err.response.data.message;
+      }
       setErrorDialogMessage(message);
       setShowErrorDialog(true);
     } finally {
@@ -315,10 +322,10 @@ export function AdopterRegistrationForm() {
         showSuccess={showSuccessDialog}
         onSuccessClose={() => {
           setShowSuccessDialog(false);
-          globalThis.history.back();
+          navigate('/login');
         }}
         successTitle="Adopter Registered Successfully!"
-        successDescription="Your adopter profile has been successfully registered. You can now request pet adoptions."
+        successDescription="Your adopter profile has been successfully registered. You can now log in with your email and password."
         showError={showErrorDialog}
         onErrorClose={() => setShowErrorDialog(false)}
         errorMessage={errorDialogMessage}
