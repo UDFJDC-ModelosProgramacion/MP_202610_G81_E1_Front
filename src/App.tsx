@@ -4,13 +4,11 @@ import { PetHomePage } from './pages/PetHomePage';
 import { HomePage } from './pages/HomePage';
 import { TestLandingPage } from './pages/TestLandingPage';
 import { ShelterRegistrationPage } from './pages/ShelterRegistrationPage';
-import OpenClinical from './features/clinical/OpenClinical';
-import RegisterEvent from './features/medical-event/RegisterEvent';
-import EditEvent from './features/medical-event/EditEvent';
-import VaccineCatalog from './features/vaccine/VaccineCatalog';
-import ApplyVaccine from './features/vaccine/ApplyVaccine';
-import ConsultClinical from './features/clinical/ConsultClinical';
 import DeleteRecord from './features/admin/DeleteRecord'
+import { VaccinePage } from './pages/VaccinePage';
+import { MedicalHistoryPage } from './pages/MedicalHistoryPage';
+import { MedicalEventPage } from './pages/MedicalEventPage';
+import { VaccinationRecordPage } from './pages/VaccinationRecordPage';
 
 // HU24 — Registro de Adoptante
 import { AdopterRegistrationPage } from './pages/AdopterRegistrationPage';
@@ -39,12 +37,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/clinical/open" element={<OpenClinical />} />
-        <Route path="/clinical/consult" element={<ConsultClinical />} />
-        <Route path="/events/register" element={<RegisterEvent />} />
-        <Route path="/events/edit" element={<EditEvent />} />
-        <Route path="/vaccines" element={<VaccineCatalog />} />
-        <Route path="/vaccines/apply" element={<ApplyVaccine />} />
+        <Route path="/vaccines" element={<VaccinePage />} />
+        <Route path="/medical-histories" element={<MedicalHistoryPage />} />
+        <Route path="/medical-events" element={<MedicalEventPage />} />
+        <Route path="/vaccination-records" element={<VaccinationRecordPage />} />
+
         <Route path="/admin/delete" element={<DeleteRecord />} />
         {/* Nueva Página de inicio profesional */}
         <Route path="/" element={<HomePage />} />
