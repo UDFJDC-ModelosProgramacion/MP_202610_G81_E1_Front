@@ -104,6 +104,7 @@ export function AdopterRegistrationForm() {
         housingType: formData.housingType,
         hasChildren: formData.hasChildren === 'true',
         hasOtherPets: formData.hasOtherPets === 'true',
+        role: 'ADOPTER',
       });
 
       setSubmissionStatus('success');

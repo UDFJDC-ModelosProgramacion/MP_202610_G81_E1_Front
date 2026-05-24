@@ -1,4 +1,5 @@
 import type { ShelterDTO } from './shelter';
+import type { UserRole } from './auth';
 
 export interface UserDTO {
   id?: number;
@@ -6,6 +7,7 @@ export interface UserDTO {
   email: string;
   phone: string;
   password?: string;
+  role?: UserRole;
 }
 
 export interface VeterinarianDTO extends UserDTO {
