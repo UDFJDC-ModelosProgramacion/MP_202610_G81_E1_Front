@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type {
+  VeterinarianDTO,
   VeterinarianDetailDTO,
   VaccineDTO,
   MedicalEventDTO,
@@ -10,6 +11,11 @@ import type {
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 const API_URL = `${BASE_URL}/veterinarians`;
+
+export const registerVeterinarian = async (data: Omit<VeterinarianDTO, 'id'>): Promise<VeterinarianDTO> => {
+  const response = await axios.post<VeterinarianDTO>(API_URL, data);
+  return response.data;
+};
 
 export const getVeterinarians = async (): Promise<VeterinarianDetailDTO[]> => {
   const response = await axios.get<VeterinarianDetailDTO[]>(API_URL);

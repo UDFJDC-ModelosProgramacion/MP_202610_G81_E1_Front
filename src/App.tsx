@@ -32,6 +32,8 @@ import { ReviewsListPage } from './pages/ReviewsListPage';
 import { ShelterEventRegistrationPage } from './pages/ShelterEventRegistrationPage';
 // HUxx — Consulta de Veterinarios
 import { VeterinarianDirectoryPage } from './pages/VeterinarianDirectoryPage';
+import { VeterinarianRegistrationPage } from './pages/VeterinarianRegistrationPage';
+import { PetRegistrationPage } from './pages/PetRegistrationPage';
 import { LoginPage } from './pages/LoginPage';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/shared/ProtectedRoute';
@@ -67,7 +69,9 @@ function App() {
           <Route path="/register-adopter" element={<AdopterRegistrationPage />} />
           <Route path="/register-adoption" element={<AdoptionRegistrationPage />} />
           <Route path="/veterinarians" element={<VeterinarianDirectoryPage />} />
-        {/* Ruta 404 */}
+          <Route path="/register-veterinarian" element={<VeterinarianRegistrationPage />} />
+          <Route path="/register-pet" element={<PetRegistrationPage />} />
+          {/* Ruta 404 */}
         <Route path="*" element={<div className="p-10">404 - Not Found</div>} />
       </Routes>
     </Router>
