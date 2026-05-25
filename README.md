@@ -1,5 +1,8 @@
 ## Enlaces de interes
 
+- [Video](https://www.youtube.com/watch?v=-GsZS-4Y8aI)
+
+
 - [Estructura del Frontend](https://github.com/UDFJDC-ModelosProgramacion/MP_202610_G81_E1_Front/wiki/Estructura)
 
 - [Configuracion de SonarQube y Jenkins en local](https://github.com/UDFJDC-ModelosProgramacion/MP_202610_G81_E1_Back/wiki/SonarQube-&-Jenkins)
